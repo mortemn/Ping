@@ -5,35 +5,35 @@ export default function Home() {
     return (
         <body>
             <header>
-                <h2 class="logo">P<span style="color: red">I</span>NG</h2>
-                <h2 class="ttl">A hide and seek game</h2>
-                <nav class="navigation">
-                    <button class="btnlogin">Login</button>
+                <h2 className={styles.logo}>P<span style={{color: 'red'}}>I</span>NG</h2>
+                <h2 className={styles.ttl}>A hide and seek game</h2>
+                <nav className={styles.navigation}>
+                    <button className={styles.btnlogin}>Login</button>
                 </nav>
             </header>
 
-            <div class="wrapper">
-                <div class="form-box login">
+            <div className={styles.wrapper}>
+                <div className={styles.form_box}>
                     <h2>Login</h2>
                     <form action="#">
-                        <div class="input-box">
-                            <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <div className={styles.input_box}>
+                            <span className={styles.icon}><ion-icon name="mail"></ion-icon></span>
                             <input type="email" required />
                             <label>Email</label>
                         </div>
-                        <div class="input-box">
-                            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <div className={styles.input_box}>
+                            <span className={styles.icon}><ion-icon name="lock-closed"></ion-icon></span>
                             <input type="password" required />
                             <label>Password</label>
                         </div>
-                        <div class="remember-forgot">
+                        <div className={styles.remember_forgot}>
                             <label><input type="checkbox"/>Remember me</label>
                             <a href="#">Forgot Password?</a>
                         </div>
-                        <button type="submit" class="btn">Login</button>
-                        <div class="login-register">
+                        <button type="submit" className={styles.btn}>Login</button>
+                        <div className={styles.login_register}>
                             <p>Don't have an account?
-                                <a href="#" class="register-link">Register</a>
+                                <a href="#" className={styles.register_link}>Register</a>
                             </p>
                         </div>
                     </form>
