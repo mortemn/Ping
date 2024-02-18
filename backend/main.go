@@ -1,45 +1,34 @@
-// Copyright 2013 The Gorilla WebSocket Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-
 package main
 
 import (
-	"flag"
-	"log"
-	"net/http"
-	"time"
+    "fmt"
+    "github.com/gorilla/websocket"
+    "github.com/gin-gonic/gin"
+    "main/ws"
+    "main/auth"
 )
 
-var addr = flag.String("addr", ":8081", "http service address")
-
-func serveHome(w http.ResponseWriter, r *http.Request) {
-	log.Println(r.URL)
-	if r.URL.Path != "/" {
-		http.Error(w, "Not found", http.StatusNotFound)
-		return
-	}
-	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-	http.ServeFile(w, r, "home.html")
+var upgrader = websocket.Upgrader{
+    ReadBufferSize: 1024,
+    WriteBufferSize: 1024,
 }
 
 func main() {
-	flag.Parse()
-	hub := newHub()
-	go hub.run()
-	http.HandleFunc("/", serveHome)
-	http.HandleFunc("/ws", func(w http.ResponseWriter, r *http.Request) {
-		serveWs(hub, w, r)
-	})
-	server := &http.Server{
-		Addr:              *addr,
-		ReadHeaderTimeout: 3 * time.Second,
-	}
-	err := server.ListenAndServe()
-	if err != nil {
-		log.Fatal("ListenAndServe: ", err)
-	}
+    fmt.Println("Server started")
+
+    router := gin.Default()
+
+    hub := ws.newHub()
+    wsHandler := ws.NewHandler(hub)
+
+    // Authentication endpoints
+	router.POST("/signin", auth.Signin)
+	router.POST("/welcome", auth.Welcome)
+	router.POST("/refresh", auth.Refresh)
+	router.POST("/logout", auth.Logout)
+
+    // Websocket endpoints
+    router.GET("/CreateRoom", hub.CreateRoom)
+
+    router.Run()
 }
