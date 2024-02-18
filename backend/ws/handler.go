@@ -4,6 +4,8 @@ import (
     "net/http"
 
     "github.com/gin-gonic/gin"
+    "github.com/gorilla/websocket"
+    "strconv"
 )
 
 type Handler struct {
@@ -31,4 +33,62 @@ func (h *Handler) CreateRoom(c *gin.Context) {
     }
 
     c.JSON(http.StatusOK, req)
+}
+
+// Upgrader to upgrade the HTTP connection to a WebSocket connection.
+var upgrader = websocket.Upgrader{
+    ReadBufferSize: 1024,
+    WriteBufferSize: 1024,
+    // Maybe add check origin later.
+}
+
+func (h *Handler) JoinRoom(c *gin.Context) {
+    conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
+
+    roomId := c.Param("roomId")
+    clientId := c.Query("clientId")
+    username := c.Query("username")
+
+    xcoord, err := strconv.Atoi(c.Query("xcoord"))
+
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"Non integer detected in xcoord": err.Error()})
+        return
+    }
+
+    ycoord, err := strconv.Atoi(c.Query("ycoord"))
+
+    if err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"Non integer detected in ycoord": err.Error()})
+        return
+    }
+
+    client := &Client{
+        Socket: conn,
+        Coords: &Coords{
+            X: xcoord,
+            Y: ycoord,
+        },
+        Username: username,
+        ClientId: clientId,
+        RoomId: roomId,
+        Seeker: false,
+        State: make(chan *GameState),
+    }
+
+    update := &GameState{
+        Over: false,
+        RoomId: roomId,
+        Message: "A new player has joined the game!",
+    }
+
+    h.hub.Register <- client
+    h.hub.Broadcast <- update
+
+    go client.Write()
+    client.Read(h.hub)
 }

@@ -5,7 +5,7 @@ import (
     "github.com/gorilla/websocket"
     "github.com/gin-gonic/gin"
     "main/ws"
-    "main/auth"
+    // "main/auth"
 )
 
 var upgrader = websocket.Upgrader{
@@ -18,17 +18,19 @@ func main() {
 
     router := gin.Default()
 
-    hub := ws.newHub()
+    hub := ws.NewHub()
     wsHandler := ws.NewHandler(hub)
+    go hub.Run()
 
     // Authentication endpoints
-	router.POST("/signin", auth.Signin)
-	router.POST("/welcome", auth.Welcome)
-	router.POST("/refresh", auth.Refresh)
-	router.POST("/logout", auth.Logout)
+	// router.POST("/signin", auth.Signin)
+	// router.POST("/welcome", auth.Welcome)
+	// router.POST("/refresh", auth.Refresh)
+	// router.POST("/logout", auth.Logout)
 
     // Websocket endpoints
-    router.GET("/CreateRoom", hub.CreateRoom)
+    router.GET("/CreateRoom", wsHandler.CreateRoom)
+    router.GET("/JoinRoom/:roomId", wsHandler.JoinRoom)
 
     router.Run()
 }
