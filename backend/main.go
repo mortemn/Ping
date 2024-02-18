@@ -2,16 +2,10 @@ package main
 
 import (
     "fmt"
-    "github.com/gorilla/websocket"
     "github.com/gin-gonic/gin"
     "main/ws"
     // "main/auth"
 )
-
-var upgrader = websocket.Upgrader{
-    ReadBufferSize: 1024,
-    WriteBufferSize: 1024,
-}
 
 func main() {
     fmt.Println("Server started")
