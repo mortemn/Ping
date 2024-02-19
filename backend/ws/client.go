@@ -20,6 +20,7 @@ type GameState struct {
     Over    bool `json:"over"`
     RoomId  string `json:"room_id"`
     Message string `json:"message"`
+    // GameTimer int 
 }
 
 type Coords struct {
@@ -57,5 +58,8 @@ func (c *Client) Read(hub *Hub) {
         }
     }
 
-    handleCoords(c, string(coords), hub)
+    handleCoords(c, int(coords), hub)
+    // handleCoords(c, string(coords), hub)
+    // @Colin Can we change this to int instead of String so that it's easier to compare values after without needing to convert back to int again ?
+    // But one var can't hold two int values :/ 
 }
