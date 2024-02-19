@@ -3,6 +3,8 @@ package ws
 import (
     "github.com/gorilla/websocket"
     "log"
+    "strconv"
+    "strings"
 )
 
 type Client struct {
@@ -58,8 +60,10 @@ func (c *Client) Read(hub *Hub) {
         }
     }
 
-    handleCoords(c, int(coords), hub)
-    // handleCoords(c, string(coords), hub)
+    arr := strings.Split(string(coords), ",")
+    x, _ := strconv.Atoi(arr[0])
+    y, _ := strconv.Atoi(arr[1])
+    handleCoords(c, x, y, hub)
     // @Colin Can we change this to int instead of String so that it's easier to compare values after without needing to convert back to int again ?
     // But one var can't hold two int values :/ 
 }
