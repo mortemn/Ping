@@ -39,7 +39,7 @@ var bottomRightX int = 100
 var bottomRightY int = 0
 // Assuming client.go line 60:string(coords) will be in "X, Y" string form
 
-func mapCoords(c *Client, x int, y int, hub *Hub) {
+func mapCoords(c *Client, x float64, y float64, hub *Hub) {
     if (coords < topLeftX || coords > topLeftY) {
         // hub. update status to c.
         fmt.Println("Out of Bounds")

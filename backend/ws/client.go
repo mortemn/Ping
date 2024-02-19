@@ -61,8 +61,9 @@ func (c *Client) Read(hub *Hub) {
     }
 
     arr := strings.Split(string(coords), ",")
-    x, _ := strconv.Atoi(arr[0])
-    y, _ := strconv.Atoi(arr[1])
+    x, _ := strconv.ParseFloat(arr[0], 64)
+    y, _ := strconv.ParseFloat(arr[1], 64)
+
     handleCoords(c, x, y, hub)
     // @Colin Can we change this to int instead of String so that it's easier to compare values after without needing to convert back to int again ?
     // But one var can't hold two int values :/ 
