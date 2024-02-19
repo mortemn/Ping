@@ -60,11 +60,10 @@ func (c *Client) Read(hub *Hub) {
         }
     }
 
+    // Parses the coordinates from the frontend into float and updates the game state.
     arr := strings.Split(string(coords), ",")
     x, _ := strconv.ParseFloat(arr[0], 64)
     y, _ := strconv.ParseFloat(arr[1], 64)
 
     handleCoords(c, x, y, hub)
-    // @Colin Can we change this to int instead of String so that it's easier to compare values after without needing to convert back to int again ?
-    // But one var can't hold two int values :/ 
 }

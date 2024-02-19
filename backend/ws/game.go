@@ -19,7 +19,7 @@ func GameTimer() {
     // hub. update status to Client.go GameState Over bool
 }
 
-func handleCoords(c *Client, coords int, hub *Hub) {
+func handleCoords(c *Client, x float64, y float64, hub *Hub) {
     // @Peiyee: Add logic to handle the coordinates here.
     mapCoords(c *Client, coords int, hub *Hub)
 }
