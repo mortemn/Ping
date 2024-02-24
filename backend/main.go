@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"log"
@@ -8,6 +9,8 @@ import (
 	"time"
 
 	"database/sql"
+
+	_ "github.com/microsoft/go-mssqldb"
 
 	"github.com/golang-jwt/jwt/v5"
 
@@ -42,6 +45,23 @@ func main() {
 
 	http.HandleFunc("/login", Login)
 	http.HandleFunc("/signup", SignUp)
+	http.HandleFunc("/refresh", Refresh)
+	http.HandleFunc("/logout", Logout)
+
+	//DON'T TOUCH THIS SHIT COLLIN
+	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;", server, user, password, port, database)
+	var err error
+	// Create connection pool
+	db, err = sql.Open("sqlserver", connString)
+	if err != nil {
+		log.Fatal("Error creating connection pool: ", err.Error())
+	}
+	ctx := context.Background()
+	err = db.PingContext(ctx)
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+	fmt.Printf("Connected!")
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
 
@@ -59,6 +79,7 @@ type User struct {
 	UserID       string `json:"userId" validate:"required"`
 	Token        string `json:"token"`
 	RefreshToken string `json:"refreshToken"`
+	PlayerID     string `json:"string"`
 }
 
 // will be encoded to a JWT
@@ -68,6 +89,11 @@ type JWTClaims struct {
 }
 
 var jwtKey = []byte("secretstuffhere")
+var server = "pingproject.database.windows.net"
+var port = 1433
+var user = "CloudSA35d557de"
+var password = "Eight82970622!"
+var database = "ping"
 
 // Connect to the mySQL database
 func connectToDatabase() {
@@ -84,7 +110,7 @@ func connectToDatabase() {
 	fmt.Println("connected to Josh's Database")
 }
 
-// Signup end point
+// Function that handles signup requests
 func SignUp(w http.ResponseWriter, r *http.Request) {
 	var user User
 	err := json.NewDecoder(r.Body).Decode(&user)
@@ -106,6 +132,7 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 	//I WOULD INSERT SHIT TO DATABASE HERE
 }
 
+// Function that handles login requests
 func Login(w http.ResponseWriter, r *http.Request) {
 	var user User
 	err := json.NewDecoder(r.Body).Decode(&user)
@@ -148,6 +175,72 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	w.Write([]byte(fmt.Sprintf("Welcome %s!", claims.Username)))
 
+}
+
+func Refresh(w http.ResponseWriter, r *http.Request) {
+	c, err := r.Cookie("token")
+	if err != nil {
+		if err == http.ErrNoCookie {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	tokenStore := c.Value
+
+	claims := &JWTClaims{}
+
+	tkn, err := jwt.ParseWithClaims(tokenStore, claims, func(token *jwt.Token) (any, error) {
+		return jwtKey, nil
+	})
+
+	if err != nil {
+		if err == jwt.ErrSignatureInvalid {
+			w.WriteHeader(http.StatusUnauthorized)
+			return
+		}
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	if !tkn.Valid {
+		w.WriteHeader(http.StatusUnauthorized)
+		return
+	}
+
+	if time.Until(claims.ExpiresAt.Time) > 30*time.Second {
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	expirationTime := time.Now().Add(5 * time.Minute)
+
+	claims.ExpiresAt = jwt.NewNumericDate(expirationTime)
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	tokenString, err := token.SignedString(jwtKey)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name:    "token",
+		Value:   tokenString,
+		Expires: expirationTime,
+	})
+
+}
+
+func Logout(w http.ResponseWriter, r *http.Request) {
+	http.SetCookie(w, &http.Cookie{
+		Name:    "token",
+		Expires: time.Now(),
+	})
 }
 
 // For testing purposes, this would be in the database, but Josh hasn't finished it yet
