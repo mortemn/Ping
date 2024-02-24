@@ -1,10 +1,11 @@
 package ws
 
 import (
-    "github.com/gorilla/websocket"
-    "log"
-    "strconv"
-    "strings"
+	"log"
+	"strconv"
+	"strings"
+
+	"github.com/gorilla/websocket"
 )
 
 type Client struct {
@@ -22,8 +23,22 @@ type GameState struct {
     Over    bool `json:"over"`
     RoomId  string `json:"room_id"`
     Message string `json:"message"`
-    // GameTimer int 
+    // need to show time as well
 }
+
+type GameSettings struct {
+    RoomId  string `json:"room_id"`
+    GameDuration string `json:"game_duration"`
+    MapChoice string `json:"map_choice"`
+    HiderCount int `json:"hider_count"`
+}
+
+type PlayerScore struct {
+    ClientId    string `json:"client_id"`
+    RoomId      string `json:"room_id"`
+    Score       int64 `json:"score"`
+}
+
 
 type Coords struct {
     X int `json:"x"`
@@ -66,4 +81,5 @@ func (c *Client) Read(hub *Hub) {
     y, _ := strconv.ParseFloat(arr[1], 64)
 
     handleCoords(c, x, y, hub)
+
 }

@@ -1,11 +1,12 @@
 package ws
 
 import (
-    "net/http"
+	"net/http"
 
-    "github.com/gin-gonic/gin"
-    "github.com/gorilla/websocket"
-    "strconv"
+	"strconv"
+
+	"github.com/gin-gonic/gin"
+	"github.com/gorilla/websocket"
 )
 
 type Handler struct {
@@ -42,7 +43,7 @@ var upgrader = websocket.Upgrader{
     // Maybe add check origin later.
 }
 
-func (h *Handler) JoinRoom(c *gin.Context) {
+func (h *Handler) JoinRoom(c *gin.Context){
     conn, err := upgrader.Upgrade(c.Writer, c.Request, nil)
     if err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -91,4 +92,29 @@ func (h *Handler) JoinRoom(c *gin.Context) {
 
     go client.Write()
     client.Read(h.hub)
+}
+
+func (h *Handler) GameInitiation(c *gin.Context){
+    roomId := c.Param("roomId")
+    timerChoice := c.Query("game_duration")
+    mapChoice := c.Query("map_choice")
+    gameOver := c.Query("over")
+    // function called, assign value to gameOver, starts timer, loop to check game status and run validator
+
+    go gameTimer(timerChoice)
+    mapBoundary(mapChoice)
+    for {
+        // loop
+        // seekerStatus()
+        if (gameOver == "true"){
+            // send something to the frontend idk
+            update := &GameState{
+                Over: true,
+                RoomId: roomId,
+                Message: "Game is Over!",
+            }
+            h.hub. Broadcast <- update
+            break
+        }
+    }
 }

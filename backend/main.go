@@ -16,6 +16,8 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	//"main/ws
+	"fmt"
+	// "main/auth"
 )
 
 func main() {
@@ -36,6 +38,7 @@ func main() {
 	// Websocket endpoints
 	//router.GET("/CreateRoom", wsHandler.CreateRoom)
 	//router.GET("/JoinRoom/:roomId", wsHandler.JoinRoom)
+    //router.GET("/GameStatus/:roomId", wsHandler.game)
 
 	//Marcus's shit don't touch COLLIN
 
