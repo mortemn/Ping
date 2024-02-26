@@ -1,9 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"context"
 	"encoding/json"
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -16,7 +16,6 @@ import (
 
 	_ "github.com/go-sql-driver/mysql"
 	//"main/ws
-	"fmt"
 	// "main/auth"
 )
 
@@ -40,12 +39,6 @@ func main() {
 	//router.GET("/JoinRoom/:roomId", wsHandler.JoinRoom)
     //router.GET("/GameStatus/:roomId", wsHandler.game)
 
-	//Marcus's shit don't touch COLLIN
-
-	//uncomment to connect to josh's stuff
-	//connectToDatabase()
-	//defer db.Close()
-
 	http.HandleFunc("/login", Login)
 	http.HandleFunc("/signup", SignUp)
 	http.HandleFunc("/refresh", Refresh)
@@ -54,16 +47,20 @@ func main() {
 	//DON'T TOUCH THIS SHIT COLLIN
 	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;", server, user, password, port, database)
 	var err error
+
 	// Create connection pool
 	db, err = sql.Open("sqlserver", connString)
 	if err != nil {
 		log.Fatal("Error creating connection pool: ", err.Error())
 	}
+
 	ctx := context.Background()
 	err = db.PingContext(ctx)
+
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+
 	fmt.Printf("Connected!")
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
