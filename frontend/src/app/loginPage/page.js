@@ -32,7 +32,7 @@ export default function Home() {
                         </div>
                         <button type="submit" className={styles.btn}>Login</button>
                         <div className={styles.login_register}>
-                            <p>Don't have an account?
+                            <p>Don&apos;t have an account?
                                 <a href="#" className={styles.register_link}>Register</a>
                             </p>
                         </div>
@@ -40,7 +40,6 @@ export default function Home() {
                 </div>
             </div>
 
-            <script src="script.js"></script>
             <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
             <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 
