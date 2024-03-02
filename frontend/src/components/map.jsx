@@ -43,17 +43,26 @@ export function Map({w, h}) {
                 position: position,
                 map: map
             });
-
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                  const pos = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                  };
-                  map.setCenter(pos);
-                  marker.setPosition(pos);
-                }
-            );
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                      const pos = {
+                     lat: position.coords.latitude,
+                     lng: position.coords.longitude,
+                   };
+                   map.setCenter(pos);
+                   marker.setPosition(pos);
+                 }
+                );
+            }else{
+                //Handle no geolocation
+                const defaultPosition = {
+                    lat: 0,
+                    lng: 0
+                };
+                map.setCenter(defaultPosition);
+                marker.setPosition(defaultPosition);
+            }
         }
 
         initMap();
