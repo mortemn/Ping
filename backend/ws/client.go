@@ -16,6 +16,7 @@ type Client struct {
     RoomId      string `json:"room_id"`
     Seeker      bool `json:"seeker"`
     State       chan *GameState
+    Score       int64 `json:"score"`
 }
 
 // @Peiyee: Add variables relevant to the game state here.

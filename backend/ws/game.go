@@ -144,37 +144,34 @@ func(h *Handler)playerCoords(c *Client, x float64, y float64, hub *Hub){
 }
 
 
-// func (h *Handler) playerScore(c *gin.Context){
-//     clientId := c.Param("clientId")
-//     roomId := c.Param("roomId")
-//     playerRole := c.Query("seeker")
-//     score := c.Query("score")
+func (h *Handler) playerScore(c *Client){
 
-//     scoreint, _ := strconv.ParseInt(score, 10, 64)
+     var scoreint int64 = c.Score
+     var roomid string = c.RoomId
+     var playerRole bool = c.Seeker
 
-//     var val400 int64 = 400
-//     var val1000 int64 = 1000
+     var val400 int64 = 400
+     var val1000 int64 = 1000
 
-//     if (playerRole == "false") {
-//     // hider
-//         scoreint = timePassed * val400
-//         // 400 for every minute hidden
-//     } else { 
-//     // seeker
-//         scoreint += val1000
-//         // 1000 for every seeker caught
-//     }
+     if (playerRole == false) {
+     // hider
+         scoreint = timePassed * val400
+         // 400 for every minute hidden
+     } else { 
+     // seeker
+         scoreint += val1000
+         // 1000 for every seeker caught
+     }
 
-//     updateScore := &PlayerScore{
-//         ClientId: clientId,
-//         RoomId: roomId,
-//         Score: scoreint,
-//     }
+     update := &GameState{
+            Over: false,
+            RoomId: roomid,
+            Message: "Score Updated",
+        }
 
-//     h.hub. Broadcast <- updateScore
-//     // error message ws/game.go:142:25: cannot use updateScore (variable of type *PlayerScore) as *GameState value in send
 
-// }
+     h.hub.Broadcast <- update
+}
 
 
 // func seekerStatus(){
