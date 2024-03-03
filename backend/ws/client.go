@@ -24,26 +24,23 @@ type GameState struct {
     Over    bool `json:"over"`
     RoomId  string `json:"room_id"`
     Message string `json:"message"`
-    // need to show time as well
+    Timer string `json:"timer"`
+    // send update to timer every min
+    HiderCount int `json:"hider_count"`
+    Scores map[string]int64 `json:"scores"`
 }
 
 type GameSettings struct {
     RoomId  string `json:"room_id"`
     GameDuration string `json:"game_duration"`
     MapChoice string `json:"map_choice"`
-    HiderCount int `json:"hider_count"`
 }
-
-type PlayerScore struct {
-    ClientId    string `json:"client_id"`
-    RoomId      string `json:"room_id"`
-    Score       int64 `json:"score"`
-}
-
 
 type Coords struct {
-    X int `json:"x"`
-    Y int `json:"y"`
+    // X int `json:"x"`
+    // Y int `json:"y"`
+    X float64 `json:"x"`
+    Y float64 `json:"y"`
 }
 
 // This function sends back state of the game to frontend as a response. 

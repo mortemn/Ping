@@ -5,34 +5,44 @@ import (
 	"time"
 )
 
-var timePassed int64 = 0
+var timePassed int = 0
 
 func gameTimer(gameDuration string){
-    
+    // To determine and start game timer.
+    var timer int
     switch gameDuration{
     case "15":
-        for (timePassed < 15) {
-            gametimer := time.NewTimer(1 * time.Minute)
-            <-gametimer.C
-            timePassed += 1
-        }
-
+        timer = 15
     case "30":
-        for (timePassed < 30) {
-            gametimer := time.NewTimer(1 * time.Minute)
-            <-gametimer.C
-            timePassed += 1
-        }
-
+        timer = 30
     case "45":
-        for (timePassed < 45) {
-            gametimer := time.NewTimer(1 * time.Minute)
-            <-gametimer.C
-            timePassed += 1
-        }
-    }
-}
+        timer = 45
+    default:
+        log.Printf("error: Choice Invalid")
 
+    }
+    // Using case statements to assign value to timer (easier than using strconv).
+
+    for (timePassed < timer) {
+        // for-loop to keep track of time passed.
+        gametimer := time.NewTimer(1 * time.Minute)
+        <-gametimer.C
+        timePassed += 1
+
+        return &GameState{
+            Timer: "timePassed",
+            Message: "timePassed",
+        }
+        // Update timer status to frontend.
+    }
+
+    return &GameState{
+        Over: true,
+        Message: "Game Over!",
+    }
+    // Timer ended.
+    // Update timer status to frontend.
+}
 
 
 var topLeftX float64
@@ -43,10 +53,13 @@ var bottomLeftX float64
 var bottomLeftY float64
 var bottomRightX float64
 var bottomRightY float64
+// Variables to store the boundaries of the map.
 
 func mapBoundary(choice string){
+    // To determine the boundaries of the map.
     switch (choice){
     case "0":
+        // Coordinates of the first map boundary.
         topLeftX = 90
         topLeftY = 9000
         
@@ -60,6 +73,7 @@ func mapBoundary(choice string){
         bottomRightY = 90
     
     case "1":
+        // Coordinates of the second map boundary.
         topLeftX = 0
         topLeftY = 1000
         
@@ -73,17 +87,22 @@ func mapBoundary(choice string){
         bottomRightY = 0
 
     default:
-        log.Printf("error: Map Invalid")
+        // Check validity of the map choice.
+        log.Printf("error: Choice Invalid")
     }
 
 }
 
+
 func handleCoords(c *Client, x float64, y float64, hub *Hub){
+    // Main Function to handle the coordinate updates from the frontend.
     mapCoords(c, x, y, hub)
-    // playerCoords(c, x, y, hub)
+    playerCoords(c, x, y, hub)
 }
 
+
 func mapCoords(c *Client, x float64, y float64, hub *Hub){
+    // To check player-map boundary overlaps.
     var boundaryWarning string = "Warning! Please Stay in Map Boundary!"
     if (x < topLeftX || y > topLeftY) {    
         c.Socket.WriteJSON(boundaryWarning)
@@ -96,89 +115,71 @@ func mapCoords(c *Client, x float64, y float64, hub *Hub){
     }
 }
 
-func(h *Handler)playerCoords(c *Client, x float64, y float64, hub *Hub){
-    // mainPlayerRole := c.Query("seeker")
-    // for _, client := range hub.Rooms[c.RoomId].Clients {
-    //     otherPlayerRole := client.Query("seeker")
 
-//     clientId := c.Param("clientId")
-//     roomId := c.Param("roomId")
-//     playerRole := c.Query("seeker")
-//     score := c.Query("score")
+func playerCoords(c *Client, x float64, y float64, hub *Hub){
+    // To check seeker-hider boundary overlaps.
 
-    var mainPlayerRole bool = true
-    var otherPlayerRole bool = false
-    var oPX float64 = 0
-    var oPY float64 = 0
-    // using a temporary variable for otherPlayer's X and Y coordinate until I can get their coordinates properly
-    var boundary float64 = 5
+    var boundary float64 = 0.0001
+    // Determine boundary(radius) of each player.
 
-        if (mainPlayerRole == true) {
-        // gotta check my values again
-            if (mainPlayerRole != otherPlayerRole){
-            // send seeker message to mainPlayerRole
-            // send hider warning to otherPlayerRole
-                if ((x + boundary) >= (oPX + boundary)) || ((oPX - boundary) >= (x - boundary)) {
-                    time.Sleep(5 * time.Second)
-                    // wait for 5 seconds
-                        if (mainPlayerRole != otherPlayerRole){ 
-                        // if hider and seeker still within each others boundary, considered caught
-                            // playerScore(otherPlayerRole)
-                            // decrement otherPlayerRole's score by 200
-                            // update hider to seeker
-                            // playerScore(mainPlayerRole) somehow increase their score
-                        }
-                } else if ((y + boundary) >= (oPY + boundary)) || ((oPY - boundary) >= (y - boundary)) {
-                    time.Sleep(5 * time.Second)
-                    // wait for 5 seconds
-                        if (mainPlayerRole != otherPlayerRole){ 
-                        // if hider and seeker still within each others boundary, considered caught
-                            // playerScore(otherPlayerRole)
-                            // decrement otherPlayerRole's score by 200
-                            // update hider to seeker
-                            // playerScore(mainPlayerRole) somehow increase their score
-                        }
+    gs := <- GameState
+    oc := <- Client
+
+    for _, oc := range hub.Rooms[c.RoomId].Clients {
+    // 'c' for 'current client'; 'oc' for 'other client'.
+    // for-loop to iterate through each of the clients' coordinates.
+
+        var ocX float64 = oc.Coords.X
+        var ocY float64 = oc.Coords.Y
+        // Temporarily assign the coordinates of other clients
+
+        if (c.Seeker == true){
+            // Simplify function such that only check player-boundary overlap for seekers.
+
+            if (c.Seeker != oc.Seeker){
+                // If current client is the seeker and another is the hider, enter IF statement to check for player boundary overlap.
+
+                if(x+boundary)>=(ocX+boundary) || (ocX-boundary)>=(x-boundary) || (y+boundary)>=(ocY+boundary) || (ocY-boundary)>=(y-boundary) {
+                    // If seeker-hider boundary overlaps, enter IF Statement.
+                    time.Sleep(5*time.Second)
+                    // Sleep for 5 seconds to allow other clients to update their coordinates.
+                    // If after 5 seconds, the seeker-hider boundary overlap persists, enter the next IF statement to take action.
+
+                    if(x+boundary)>=(ocX+boundary) || (ocX-boundary)>=(x-boundary) || (y+boundary)>=(ocY+boundary) || (ocY-boundary)>=(y-boundary) {
+                        playerScore(oc)
+                        // Update hider's score
+                        oc.Score = oc.Score - 200
+                        // Decrement hider's score as a penalty for being caught
+                        gs.HiderCount = gs.HiderCount - 1
+                        // Update Hider Count value
+                        oc.Seeker = true
+                        // Change hider's status to seeker
+                        playerScore(c)
+                        // Update seeker's score
+                    }
                 }
             }
         }
+    }
 }
 
 
-func (h *Handler) playerScore(c *Client){
-
+func playerScore(c *Client){
      var scoreint int64 = c.Score
-     var roomid string = c.RoomId
      var playerRole bool = c.Seeker
 
-     var val400 int64 = 400
-     var val1000 int64 = 1000
-
      if (playerRole == false) {
-     // hider
-         scoreint = timePassed * val400
+     // score count for hiders
+         scoreint = timePassed * 400
          // 400 for every minute hidden
      } else { 
-     // seeker
-         scoreint += val1000
+     // score count for seeker
+         scoreint += 1000
          // 1000 for every seeker caught
      }
-
-     update := &GameState{
-            Over: false,
-            RoomId: roomid,
-            Message: "Score Updated",
-        }
-
-
-     h.hub.Broadcast <- update
 }
 
+// game state update function()
 
-// func seekerStatus(){
-//     // function called everytime a hider changes over to a seeker, numberOfHider decreases by 1 everytime
-//     numberOfHiders -= 1
-//     if (numberOfHiders == 0){
-//         var Over bool = true
-//     }
-// }
-
+// at the end of the game if player still hider, have to then calculate their score
+// we only display score at the end of the game!!

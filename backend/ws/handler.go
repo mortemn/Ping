@@ -95,23 +95,27 @@ func (h *Handler) JoinRoom(c *gin.Context){
 }
 
 func (h *Handler) GameInitiation(c *gin.Context){
+    // function called, assign value to gameOver, starts timer, loop to check game status and run validator
     roomId := c.Param("roomId")
     timerChoice := c.Query("game_duration")
     mapChoice := c.Query("map_choice")
     gameOver := c.Query("over")
-    // function called, assign value to gameOver, starts timer, loop to check game status and run validator
+    
+    gs := &GameState{}
 
     go gameTimer(timerChoice)
     mapBoundary(mapChoice)
+
     for {
-        // loop
-        // seekerStatus()
-        if (gameOver == "true"){
-            // send something to the frontend idk
+        // for-loop to constantly check for game satutus (gameOver and hiderCount)
+        if (gameOver == "true" || gs.HiderCount == 0){
             update := &GameState{
                 Over: true,
                 RoomId: roomId,
                 Message: "Game is Over!",
+                Timer: "0",
+                HiderCount: 0,
+                Scores: make(map[string]int64),
             }
             h.hub. Broadcast <- update
             break
