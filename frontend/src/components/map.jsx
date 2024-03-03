@@ -13,7 +13,7 @@ export function Map({w, h}) {
             
             
             const loader = new Loader({
-                apiKey: process.env.NEXT_PUBLIC_MAPS_API_KEY,
+                apiKey: "AIzaSyAY8mc3IlmHOWs-W2roWPeItGcYfMIe1cg",
                 version: "weekly"
             });
             
