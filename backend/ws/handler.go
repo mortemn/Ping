@@ -54,14 +54,14 @@ func (h *Handler) JoinRoom(c *gin.Context){
     clientId := c.Query("clientId")
     username := c.Query("username")
 
-    xcoord, err := strconv.Atoi(c.Query("xcoord"))
+    xcoord, err := strconv.ParseFloat(c.Query("xcoord"), 64)
 
     if err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"Non integer detected in xcoord": err.Error()})
         return
     }
 
-    ycoord, err := strconv.Atoi(c.Query("ycoord"))
+    ycoord, err := strconv.ParseFloat(c.Query("ycoord"), 64)
 
     if err != nil {
         c.JSON(http.StatusBadRequest, gin.H{"Non integer detected in ycoord": err.Error()})
@@ -85,6 +85,8 @@ func (h *Handler) JoinRoom(c *gin.Context){
         Over: false,
         RoomId: roomId,
         Message: "A new player has joined the game!",
+        Timer: "0",
+        HiderCount: 0,
     }
 
     h.hub.Register <- client
@@ -99,15 +101,17 @@ func (h *Handler) GameInitiation(c *gin.Context){
     roomId := c.Param("roomId")
     timerChoice := c.Query("game_duration")
     mapChoice := c.Query("map_choice")
+    seekerNumber := c.Query("seeker_number")
     gameOver := c.Query("over")
     
-    gs := &GameState{}
+    gs := <- h.hub.Broadcast
 
-    go gameTimer(timerChoice)
+    go gameTimer(timerChoice, roomId)
     mapBoundary(mapChoice)
+    assignSeeker(seekerNumber, roomId, h.hub)
 
     for {
-        // for-loop to constantly check for game satutus (gameOver and hiderCount)
+        // for-loop to constantly check for game status (gameOver and hiderCount)
         if (gameOver == "true" || gs.HiderCount == 0){
             update := &GameState{
                 Over: true,
@@ -115,7 +119,6 @@ func (h *Handler) GameInitiation(c *gin.Context){
                 Message: "Game is Over!",
                 Timer: "0",
                 HiderCount: 0,
-                Scores: make(map[string]int64),
             }
             h.hub. Broadcast <- update
             break

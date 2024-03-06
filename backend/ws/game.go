@@ -2,12 +2,14 @@ package ws
 
 import (
 	"log"
+	"math/rand"
+	"strconv"
 	"time"
 )
 
 var timePassed int = 0
 
-func gameTimer(gameDuration string){
+func gameTimer(gameDuration string, roomId string) (gs *GameState) {
     // To determine and start game timer.
     var timer int
     switch gameDuration{
@@ -19,7 +21,6 @@ func gameTimer(gameDuration string){
         timer = 45
     default:
         log.Printf("error: Choice Invalid")
-
     }
     // Using case statements to assign value to timer (easier than using strconv).
 
@@ -28,22 +29,25 @@ func gameTimer(gameDuration string){
         gametimer := time.NewTimer(1 * time.Minute)
         <-gametimer.C
         timePassed += 1
-
-        return &GameState{
-            Timer: "timePassed",
-            Message: "timePassed",
-        }
-        // Update timer status to frontend.
+        updateTimer(timePassed, roomId)
     }
-
-    return &GameState{
-        Over: true,
-        Message: "Game Over!",
-    }
-    // Timer ended.
-    // Update timer status to frontend.
+    
+    gs.Over = true
+    gs.RoomId = roomId
+    gs.Message = "Game is Over!"
+    gs.Timer = "0"
+    // Ends the game timer and game.
+    return gs
 }
 
+func updateTimer(timePassed int, roomId string) (gs *GameState) {
+    // function to update game timer.
+    // made separate function so that it return a value (because one function can't return multiple values).
+    timePassedStr := strconv.Itoa(timePassed)
+    gs.Timer = timePassedStr
+    gs.RoomId = roomId
+    return gs
+}
 
 var topLeftX float64
 var topLeftY float64
@@ -90,7 +94,6 @@ func mapBoundary(choice string){
         // Check validity of the map choice.
         log.Printf("error: Choice Invalid")
     }
-
 }
 
 
@@ -122,8 +125,7 @@ func playerCoords(c *Client, x float64, y float64, hub *Hub){
     var boundary float64 = 0.0001
     // Determine boundary(radius) of each player.
 
-    gs := <- GameState
-    oc := <- Client
+    gs := <- c.State
 
     for _, oc := range hub.Rooms[c.RoomId].Clients {
     // 'c' for 'current client'; 'oc' for 'other client'.
@@ -165,7 +167,7 @@ func playerCoords(c *Client, x float64, y float64, hub *Hub){
 
 
 func playerScore(c *Client){
-     var scoreint int64 = c.Score
+     var scoreint int = c.Score
      var playerRole bool = c.Seeker
 
      if (playerRole == false) {
@@ -179,7 +181,26 @@ func playerScore(c *Client){
      }
 }
 
-// game state update function()
 
-// at the end of the game if player still hider, have to then calculate their score
-// we only display score at the end of the game!!
+func assignSeeker(seekerNumber string, roomId string, hub *Hub) {
+    // Function to assign seekers randomly
+    seekers, _ := strconv.Atoi(seekerNumber)
+    
+    for (seekers != 0) {
+        for _, oc := range hub.Rooms[roomId].Clients {
+            randomValue := rand.Intn(2)
+            // obtain random value
+            if randomValue == 1 && oc.Seeker == false {
+                pickSeeker(oc)
+                seekers -= 1
+            }
+        }
+    }
+}
+
+func pickSeeker(c *Client){
+    // Change seeker's status to seeker
+    c.Seeker = true
+}
+// created external function to assign seeker because multiple return values needed
+// if returned value in assignSeeker function then it may end assignSeeker function before all seeker are assigned.

@@ -16,7 +16,7 @@ type Client struct {
     RoomId      string `json:"room_id"`
     Seeker      bool `json:"seeker"`
     State       chan *GameState
-    Score       int64 `json:"score"`
+    Score       int `json:"score"`
 }
 
 // @Peiyee: Add variables relevant to the game state here.
@@ -25,20 +25,17 @@ type GameState struct {
     RoomId  string `json:"room_id"`
     Message string `json:"message"`
     Timer string `json:"timer"`
-    // send update to timer every min
     HiderCount int `json:"hider_count"`
-    Scores map[string]int64 `json:"scores"`
 }
 
 type GameSettings struct {
     RoomId  string `json:"room_id"`
     GameDuration string `json:"game_duration"`
     MapChoice string `json:"map_choice"`
+    SeekerNumber int `json:"seeker_number"`
 }
 
 type Coords struct {
-    // X int `json:"x"`
-    // Y int `json:"y"`
     X float64 `json:"x"`
     Y float64 `json:"y"`
 }
