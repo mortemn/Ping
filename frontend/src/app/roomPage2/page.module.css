@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
+
+
+
+.logo {
+    font-size: 3em;
+    user-select: none;
+}
+
+.navigation .btnhome {
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid black;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: black;
+    font-weight: 500;
+    margin-left: 720px;
+    transition: .5s;
+}
+
+.navigation .btnhome:hover {
+    background: darkgray;
+    color: #162938;
+}
+
+.wrapper {
+    position: relative;
+    width: 500px;
+    height: 540px;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0);
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.options_container {
+    display: block;
+    position: relative;
+    margin-bottom: 20px;
+    cursor: pointer;
+    font-size: 18px;
+    user-select: none;
+    text-align: left;
+}
+  
+
+.options_container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+  
+  
+.radio_input {
+    display: none;
+}
+  
+
+.radio_label {
+    width: 6em;
+    display: inline-block;
+    background-color: #f0f0f0;
+    justify-content: center;
+    text-align: center;
+    padding: 10px 20px;
+    font-size: 18px;
+    border: 2px solid lightgray;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 8px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+  
+.radio_input:checked + .radio_label {
+    background-color: darkgray;
+    color: white;
+    border-color: darkgray;
+}
+  
+.radio_label:hover {
+    background-color: lightgray;
+}
+  
+
+.dropdown_container {
+    margin-top: 10px;
+    margin-bottom: 40px;
+    text-align: center; 
+    
+  }
+  
+
+.dropdown {
+    width: 20em;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #dcdcdc;
+    font-size: 18px;
+    cursor: pointer;
+
+}
+  
+
+.dropdown:focus {
+    outline: none;
+    border-color: darkgray; 
+}
+  
+.btns {
+    text-align: center;
+}
+
+.btn { 
+    width: 150px;
+    height: 50px;
+    border: 2px solid black;
+    border-radius: 10px;
+    transition: .5s;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: black;
+    font-weight: 500;
+    background-color: darkgray;  
+}
+
+    
+  
