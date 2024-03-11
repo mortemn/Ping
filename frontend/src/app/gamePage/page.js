@@ -5,7 +5,7 @@ import { Map } from "@/components/map";
 export default function Home() {
     return ( 	        
         <body>
-            <Map w={1920} h={1080} />
+            <Map/>
             <header>
                 <div className={styles.dropdown}>
                     <button className={styles.players}>Players Caught ▾</button>
