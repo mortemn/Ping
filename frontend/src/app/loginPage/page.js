@@ -1,11 +1,22 @@
+"use client";
 import Image from "next/image";
 import styles from "./page.module.css";
+import { useState } from 'react';
 
 export default function Home() {
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+
+    function clickHandler() {
+        console.log(email)
+        console.log(password)
+        // query server endpoint using JSON
+    }
+
     return (
         <body>
             <header>
-                <h2 className={styles.logo}>P<span style={{color: 'red'}}>I</span>NG</h2>
+                <h2 className={styles.logo}>P<span style={{ color: 'red' }}>I</span>NG</h2>
                 <h2 className={styles.ttl}>A hide and seek game</h2>
                 <nav className={styles.navigation}>
                     <button className={styles.btnlogin}>Login</button>
@@ -18,20 +29,20 @@ export default function Home() {
                     <form action="#">
                         <div className={styles.input_box}>
                             <span className={styles.icon}><ion-icon name="mail"></ion-icon></span>
-                            <input type="email" required />
+                            <input type="email" required onChange={e => setEmail(e.target.value)} />
                             <label>Email</label>
                         </div>
                         <div className={styles.input_box}>
                             <span className={styles.icon}><ion-icon name="lock-closed"></ion-icon></span>
-                            <input type="password" required />
+                            <input type="password" required onChange={e => setPassword(e.target.value)} />
                             <label>Password</label>
                         </div>
                         <div className={styles.remember_forgot}>
-                            <label><input type="checkbox"/>Remember me</label>
+                            <label><input type="checkbox" />Remember me</label>
                             <a href="#">Forgot Password?</a>
                         </div>
-                        <button type="submit" className={styles.btn}>Login</button>
-                        <div className={styles.login_register}>
+                        <button type="submit" className={styles.btn} onClick={clickHandler}>Login</button>
+                        <div className={styles.login_register} >
                             <p>Don&apos;t have an account?
                                 <a href="#" className={styles.register_link}>Register</a>
                             </p>
