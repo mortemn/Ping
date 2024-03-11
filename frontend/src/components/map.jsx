@@ -69,7 +69,7 @@ export function Map() {
     }, []);
 
     return (
-        <div style={{ height: window.screen.height, width: window.screen.width}} ref={mapRef} />
+        <div style={{ height: window.innerHeight, width: window.innerWidth}} ref={mapRef} />
     )
 }
 
