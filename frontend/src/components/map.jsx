@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 
 export function Map() {
@@ -50,6 +50,7 @@ export function Map() {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude,
                         };
+                    console.log(pos);
                     map.setCenter(pos);
                     marker.setPosition(pos);
                 }
@@ -63,6 +64,38 @@ export function Map() {
                 map.setCenter(defaultPosition);
                 marker.setPosition(defaultPosition);
             }
+
+            const delay = (delayInms) => {
+                return new Promise(resolve => setTimeout(resolve, delayInms));
+            };
+
+            const trackLocation = async () => {
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => {
+                            const pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude,
+                            };
+                        console.log(pos);
+                        map.setCenter(pos);
+                        marker.setPosition(pos);
+                    }
+                    );
+                }else{
+                    //Handle no geolocation
+                    const defaultPosition = {
+                        lat: 0,
+                        lng: 0
+                    };
+                    map.setCenter(defaultPosition);
+                    marker.setPosition(defaultPosition);
+                }
+                let delayres = await delay(3000);
+                trackLocation();
+            }
+    
+            trackLocation();
         }
 
         initMap();
@@ -71,27 +104,4 @@ export function Map() {
     return (
         <div style={{ height: window.innerHeight, width: window.innerWidth}} ref={mapRef} />
     )
-}
-
-export function updateLocation(){
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const pos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-                };
-            map.setCenter(pos);
-            marker.setPosition(pos);
-        }
-        );
-    }else{
-        //Handle no geolocation
-        const defaultPosition = {
-            lat: 0,
-            lng: 0
-        };
-        map.setCenter(defaultPosition);
-        marker.setPosition(defaultPosition);
-    }
 }
