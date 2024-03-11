@@ -1,9 +1,11 @@
 import { Map } from "@/components/map";
+import { updateLocation } from "@/components/map";
 
 export default function Home() {
   return (
     <main>
-      <Map w={1920} h={400} />
+      <Map />
+      <updateLocation />
     </main>
   );
 }

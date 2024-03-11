@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 
-export function Map({w, h}) {
+export function Map() {
   
     const mapRef = React.useRef(null);
 
@@ -46,13 +46,13 @@ export function Map({w, h}) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(
                     (position) => {
-                      const pos = {
-                     lat: position.coords.latitude,
-                     lng: position.coords.longitude,
-                   };
-                   map.setCenter(pos);
-                   marker.setPosition(pos);
-                 }
+                        const pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                        };
+                    map.setCenter(pos);
+                    marker.setPosition(pos);
+                }
                 );
             }else{
                 //Handle no geolocation
@@ -69,6 +69,29 @@ export function Map({w, h}) {
     }, []);
 
     return (
-        <div style={{ height: h, width: w}} ref={mapRef} />
+        <div style={{ height: window.screen.height, width: window.screen.width}} ref={mapRef} />
     )
+}
+
+export function updateLocation(){
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude,
+                };
+            map.setCenter(pos);
+            marker.setPosition(pos);
+        }
+        );
+    }else{
+        //Handle no geolocation
+        const defaultPosition = {
+            lat: 0,
+            lng: 0
+        };
+        map.setCenter(defaultPosition);
+        marker.setPosition(defaultPosition);
+    }
 }
