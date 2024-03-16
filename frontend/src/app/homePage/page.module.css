@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
+.logo {
+    font-size: 3em;
+    user-select: none;
+}
+
+.red-letter{
+    color:red;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.navigation .btn {
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid black;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: black;
+    font-weight: 500;
+    margin-left: 20px;
+    /* margin-left: 720px; */
+    transition: .5s;
+}
+
+.navigation .btn:hover {
+    background: darkgray;
+    color: #162938;
+}
+
+.container {
+    display: flex;
+    height: 90vh;
+    width: 100vw;
+    margin-top: 10vh;
+    font-size: 2em;
+}
+
+.left-panel {
+    padding: 5.65vw 0px 0px 5px;
+    padding-left: 6.43vw;
+    padding-right: 6.43vw;
+    flex: 49;
+    background-color: rgba(225, 225, 225, 1);
+    text-align: center;
+}
+
+.left-panel p {
+    font-weight: bold;
+    line-height: 1.6;
+    padding-left: 35px;
+    padding-right: 35px;
+    letter-spacing: 5px;
+    font-size: 2.5vw;
+    text-transform: uppercase;
+}
+
+.how-to-pair {
+    margin-left: 76px;
+    display: flex;
+    justify-content: left;
+}
+
+.how-to-play {
+    font-family: 'Pixelify Sans', sans-serif;
+    font-weight: bold;
+    font-size: 2.5vw;
+    padding: 2.5vw 0px 0px 16px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+}
+
+.right-panel {
+    flex: 37;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(05 05 0.5, 1);
+    text-align: center;
+    /* padding-top: 22.150vw; */
+}
+
+.start-game-btn {
+    background-color: #b83933;
+    color: white;
+    border: none;
+    padding: 38px 10px 42px 20px;
+    margin-left: 32px;
+    border-radius: 100px;
+    cursor: pointer;
+    font-size: 25px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.start-game-btn:hover {
+    background-color: #a8544f;
+    color: rgb(207, 203, 203);
+}
+
+.fa {
+    display: inline-block;
+    font: bold 5.5vw FontAwesome;
+    color: #b83933;
+}
