@@ -52,16 +52,16 @@ export default function Home() {
                         <label for="option6" className={styles.radio_label}>12</label>
                     </div>
 
-                    <h3>Duration of each round</h3>
+                    <h3>Duration of each round(mins)</h3>
                     <div className={styles.options_container}>
                         <input type="radio" id="option7" name="line3" value="option7" className={styles.radio_input} onClick={() => setDuration(10)} />
-                        <label for="option7" className={styles.radio_label}>10mins</label>
+                        <label for="option7" className={styles.radio_label}>10</label>
 
                         <input type="radio" id="option8" name="line3" value="option8" className={styles.radio_input} onClick={() => setDuration(20)} />
-                        <label for="option8" className={styles.radio_label}>20mins</label>
+                        <label for="option8" className={styles.radio_label}>20</label>
 
                         <input type="radio" id="option9" name="line3" value="option9" className={styles.radio_input} onClick={() => setDuration(30)} />
-                        <label for="option9" className={styles.radio_label}>30mins</label>
+                        <label for="option9" className={styles.radio_label}>30</label>
                     </div>
 
                     <h3>Map</h3>

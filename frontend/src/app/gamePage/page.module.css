@@ -1,67 +1,71 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
 
+.header_widgets {
+    display:inline-block;
+    position: relative;
+    min-width: 250px;
+    min-height: 100px;
+    background-color: rgb(120, 120, 120);
+    border-radius: 10px;
+}
 
 .dropdown {
-    display: inline-block;
-    position: relative;
-  }
-  
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    line-height: 100px;
+    background-color: rgb(120, 120, 120);
+    border: black solid ;
+    border-radius: 10px;
+    font-size: 20px;
+}
 
-  
 .dropdown_options {
+    border: black solid ;
     display: none;
     position: absolute;
     overflow: auto;
     background-color:#fff;
     border-radius:5px;
     box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+    width: 100%;
 }
-  
-.dropdown:hover .dropdown_options {
+
+.header_widgets:hover .dropdown_options {
     display: block;
 }
-  
+
 .dropdown_options a {
+    border: black solid ;
     display: block;
     color: #000000;
     padding: 5px;
     text-decoration: none;
     padding:20px 40px;
-    width: 200px;
+    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-  
+
 .dropdown_options a:hover {
     color: #0a0a23;
     background-color: #ddd;
     border-radius:5px;
 }
-  
-
-.players {
-    width: 200px;
-    height: 100px;
-    background-color: rgb(120, 120, 120);
-    border-radius: 10px;
-    font-size: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-
-}
 
 .countdown {
-    width: 200px;
-    height: 100px;
+    display:inline-block;
+    position: relative;
+    min-width: 250px;
+    min-height: 100px;
     background-color: rgb(120, 120, 120);
     border-radius: 10px;
-    font-size: 50px;
     display: flex;
     justify-content: center;
-    align-items: center;
+    line-height: 100px;
+    font-size: 50px;
 }
 
 .button {
@@ -77,9 +81,31 @@
     top:85%;
     left:3%;
     position: absolute;
-
 }
 
 .button:hover {
     background-color: #a30000;
 }
+
+@media screen and (max-width: 768px) {
+    .header_widgets {
+        min-width: 200px;
+        position:absolute;
+        left: 15px;
+    }
+
+    .dropdown {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        vertical-align: top;
+    }
+
+    .countdown {
+        min-width: 125px;
+        position:absolute;
+        right:15px;
+        font-size: 45px;
+    }
+}
+
