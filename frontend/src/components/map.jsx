@@ -1,17 +1,18 @@
 "use client"
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
+import WindowDimensions from '../hooks/WindowDimensions';
 
 export function Map() {
   
     const mapRef = React.useRef(null);
+    
+    const { wid, hei } = WindowDimensions();
+
 
     useEffect(() => {
-
         const initMap = async () => {
-            
-            
             const loader = new Loader({
                 apiKey: "AIzaSyAY8mc3IlmHOWs-W2roWPeItGcYfMIe1cg",
                 version: "weekly"
@@ -99,9 +100,10 @@ export function Map() {
         }
 
         initMap();
+        console.log(wid, hei);
     }, []);
 
     return (
-        <div style={{ height: 1920, width: 1080}} ref={mapRef} />
+        <div style={{ height: hei, width: wid}} ref={mapRef} />
     )
 }
