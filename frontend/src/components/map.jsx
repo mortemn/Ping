@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import WindowDimensions from '../hooks/WindowDimensions';
 
@@ -32,6 +32,8 @@ export function Map() {
             const mapOptions = {
                 center: position,
                 zoom: 17,
+                mapTypeControl: false,
+                fullscreenControl: false,
                 mapId: 'MY_NEXTJS_MAPID'
             }
 
