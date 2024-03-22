@@ -37,31 +37,14 @@ func main() {
 	// Websocket endpoints
 	//router.GET("/CreateRoom", wsHandler.CreateRoom)
 	//router.GET("/JoinRoom/:roomId", wsHandler.JoinRoom)
-    //router.GET("/GameStatus/:roomId", wsHandler.game)
+	//router.GET("/GameStatus/:roomId", wsHandler.game)
 
 	http.HandleFunc("/login", Login)
 	http.HandleFunc("/signup", SignUp)
 	http.HandleFunc("/refresh", Refresh)
 	http.HandleFunc("/logout", Logout)
 
-	//DON'T TOUCH THIS SHIT COLLIN
-	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;", server, user, password, port, database)
-	var err error
-
-	// Create connection pool
-	db, err = sql.Open("sqlserver", connString)
-	if err != nil {
-		log.Fatal("Error creating connection pool: ", err.Error())
-	}
-
-	ctx := context.Background()
-	err = db.PingContext(ctx)
-
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-
-	fmt.Printf("Connected!")
+	connectToDatabase()
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
 
@@ -69,17 +52,14 @@ func main() {
 
 }
 
-var db *sql.DB
-
 // description of user
 type User struct {
 	Username     string `json:"username" validate:"required"`
 	Password     string `json:"password" validate:"required"`
 	Email        string `json:"email" validate:"required"`
-	UserID       string `json:"userId" validate:"required"`
 	Token        string `json:"token"`
 	RefreshToken string `json:"refreshToken"`
-	PlayerID     string `json:"string"`
+	PlayerID     string `json:"playerID" validate:"required"`
 }
 
 // will be encoded to a JWT
@@ -88,6 +68,8 @@ type JWTClaims struct {
 	jwt.RegisteredClaims
 }
 
+// Database information to connect
+var db *sql.DB
 var jwtKey = []byte("secretstuffhere")
 var server = "pingproject.database.windows.net"
 var port = 1433
@@ -97,17 +79,23 @@ var database = "ping"
 
 // Connect to the mySQL database
 func connectToDatabase() {
-	db, err := sql.Open("mysql", "root:<Eight2970622!>@tcp(127.0.0.1:3306)/test")
+	//Build connection string
+	connString := fmt.Sprintf("server=%s;user id=%s;password=%s;port=%d;database=%s;", server, user, password, port, database)
+	var err error
+
+	//Create connection pool
+	db, err = sql.Open("sqlserver", connString)
 	if err != nil {
-		panic(err.Error())
+		log.Fatal("Error creating connection pool: ", err.Error())
 	}
 
-	err = db.Ping()
+	ctx := context.Background()
+	err = db.PingContext(ctx)
 	if err != nil {
-		fmt.Println("Not connected to Josh's databse")
-		panic(err.Error())
+		log.Fatal(err.Error())
 	}
-	fmt.Println("connected to Josh's Database")
+
+	fmt.Printf("Connected to Josh's database")
 }
 
 // Function that handles signup requests
@@ -120,16 +108,19 @@ func SignUp(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if user.Username == "" || user.Password == "" {
-		http.Error(w, "Username and password are required", http.StatusBadRequest)
+	if user.Username == "" || user.Password == "" || user.Email == "" {
+		http.Error(w, "username, password and email are all required", http.StatusBadRequest)
 		return
 	}
 
-	//TEMPORARY WHILE DATABASE IS NOT UP
-	RegisteredUsers[user.Username] = user.Password
-	fmt.Println("Added new user")
-
 	//I WOULD INSERT SHIT TO DATABASE HERE
+	_, err = db.Exec("INSERT INTO player (username, password, playerID, email) VALUES (@username, @password, @playerID, @email)", sql.Named("username", user.Username), sql.Named("password", user.Password), sql.Named("playerID", user.PlayerID), sql.Named("email", user.Email))
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusCreated)
 }
 
 // Function that handles login requests
@@ -142,10 +133,16 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//Get expected password, and check if its correct
-	expectedPassword, ok := RegisteredUsers[user.Username]
-	if !ok || expectedPassword != user.Password {
-		w.WriteHeader(http.StatusUnauthorized)
+	//Get usename and password from database
+	var expectedPassword string
+	err = db.QueryRow("SELECT password FROM player WHERE username=@username", sql.Named("username", user.Username)).Scan(&expectedPassword)
+	if err != nil {
+		http.Error(w, "Invalid Username or Password", http.StatusUnauthorized)
+	}
+
+	//If password does not equal the password in the database
+	if expectedPassword != user.Password {
+		http.Error(w, "Invalid Username or Password", http.StatusUnauthorized)
 		return
 	}
 
@@ -241,11 +238,4 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 		Name:    "token",
 		Expires: time.Now(),
 	})
-}
-
-// For testing purposes, this would be in the database, but Josh hasn't finished it yet
-var RegisteredUsers = map[string]string{
-	"user1":  "password1",
-	"user2":  "password2",
-	"marcus": "table123",
 }
