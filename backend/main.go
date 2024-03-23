@@ -21,12 +21,6 @@ func main() {
 	wsHandler := ws.NewHandler(hub)
 	go hub.Run()
 
-	// Authentication endpoints
-	// router.POST("/signin", auth.Signin)
-	// router.POST("/welcome", auth.Welcome)
-	// router.POST("/refresh", auth.Refresh)
-	// router.POST("/logout", auth.Logout)
-
 	// Websocket endpoints
 	router.POST("/ws/createRoom", wsHandler.CreateRoom)
 	router.GET("/ws/joinRoom/:roomId", wsHandler.JoinRoom)
