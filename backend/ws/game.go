@@ -9,8 +9,9 @@ import (
 
 var timePassed int = 0
 
+// Starts game timer.
 func gameTimer(gameDuration string, roomId string) (gs *GameState) {
-    // To determine and start game timer.
+
     var timer int
     switch gameDuration{
     case "15":

@@ -96,7 +96,7 @@ func (h *Handler) JoinRoom(c *gin.Context){
     client.Read(h.hub)
 }
 
-func (h *Handler) GameInitiation(c *gin.Context){
+func (h *Handler) InitiateGame(c *gin.Context){
     // function called, assign value to gameOver, starts timer, loop to check game status and run validator
     roomId := c.Param("roomId")
     timerChoice := c.Query("game_duration")
