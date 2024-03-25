@@ -9,6 +9,7 @@ import (
 	"github.com/golang-jwt/jwt/v5"
     "log"
     "context"
+    "github.com/gin-gonic/gin"
 )
 
 var Db *sql.DB
@@ -60,37 +61,37 @@ func ConnectToDatabase() {
 }
 
 // Function that handles signup requests
-func SignUp(w http.ResponseWriter, r *http.Request) {
+func SignUp(c *gin.Context) {
 	var user User
-	err := json.NewDecoder(r.Body).Decode(&user)
+	err := json.NewDecoder(c.Request.Body).Decode(&user)
 
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusBadRequest)
+		http.Error(c.Writer, err.Error(), http.StatusBadRequest)
 		return
 	}
 
 	if user.Username == "" || user.Password == "" || user.Email == "" {
-		http.Error(w, "username, password and email are all required", http.StatusBadRequest)
+		http.Error(c.Writer, "username, password and email are all required", http.StatusBadRequest)
 		return
 	}
 
 	//I WOULD INSERT SHIT TO DATABASE HERE
 	_, err = db.Exec("INSERT INTO player (username, password, playerID, email) VALUES (@username, @password, @playerID, @email)", sql.Named("username", user.Username), sql.Named("password", user.Password), sql.Named("playerID", user.PlayerID), sql.Named("email", user.Email))
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(c.Writer, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
-	w.WriteHeader(http.StatusCreated)
+	c.JSON(http.StatusCreated, user)
 }
 
 // Function that handles login requests
-func Login(w http.ResponseWriter, r *http.Request) {
+    func Login(c *gin.Context) {
 	var user User
-	err := json.NewDecoder(r.Body).Decode(&user)
+	err := json.NewDecoder(c.Request.Body).Decode(&user)
 
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
+		c.JSON(http.StatusCreated, user)
 		return
 	}
 
@@ -98,12 +99,12 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	var expectedPassword string
 	err = db.QueryRow("SELECT password FROM player WHERE username=@username", sql.Named("username", user.Username)).Scan(&expectedPassword)
 	if err != nil {
-		http.Error(w, "Invalid Username or Password", http.StatusUnauthorized)
+		http.Error(c.Writer, "Invalid Username or Password", http.StatusUnauthorized)
 	}
 
 	//If password does not equal the password in the database
 	if expectedPassword != user.Password {
-		http.Error(w, "Invalid Username or Password", http.StatusUnauthorized)
+		http.Error(c.Writer, "Invalid Username or Password", http.StatusUnauthorized)
 		return
 	}
 
@@ -121,55 +122,53 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	tokenString, err := token.SignedString(jwtKey)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	http.SetCookie(w, &http.Cookie{
+	http.SetCookie(c.Writer, &http.Cookie{
 		Name:    "token",
 		Value:   tokenString,
 		Expires: expirationTime,
 	})
 
-	w.Write([]byte(fmt.Sprintf("Welcome %s!", claims.Username)))
+	c.Writer.Write([]byte(fmt.Sprintf("Welcome %s!", claims.Username)))
 
 }
 
-func Refresh(w http.ResponseWriter, r *http.Request) {
-	c, err := r.Cookie("token")
+func Refresh(c *gin.Context) {
+	cookie, err := c.Cookie("token")
 	if err != nil {
 		if err == http.ErrNoCookie {
-			w.WriteHeader(http.StatusUnauthorized)
+            c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 			return
 		}
-		w.WriteHeader(http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
-	tokenStore := c.Value
-
 	claims := &JWTClaims{}
 
-	tkn, err := jwt.ParseWithClaims(tokenStore, claims, func(token *jwt.Token) (any, error) {
+	tkn, err := jwt.ParseWithClaims(cookie, claims, func(token *jwt.Token) (any, error) {
 		return jwtKey, nil
 	})
 
 	if err != nil {
 		if err == jwt.ErrSignatureInvalid {
-			w.WriteHeader(http.StatusUnauthorized)
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 			return
 		}
-		w.WriteHeader(http.StatusBadRequest)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	if !tkn.Valid {
-		w.WriteHeader(http.StatusUnauthorized)
+        c.JSON(http.StatusUnauthorized, gin.H{"Error": "Token is not valid"})
 		return
 	}
 
 	if time.Until(claims.ExpiresAt.Time) > 30*time.Second {
-		w.WriteHeader(http.StatusBadRequest)
+        c.JSON(http.StatusBadRequest, gin.H{"Error": "Token expired"})
 		return
 	}
 
@@ -182,11 +181,11 @@ func Refresh(w http.ResponseWriter, r *http.Request) {
 	tokenString, err := token.SignedString(jwtKey)
 
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	http.SetCookie(w, &http.Cookie{
+	http.SetCookie(c.Writer, &http.Cookie{
 		Name:    "token",
 		Value:   tokenString,
 		Expires: expirationTime,
@@ -194,8 +193,8 @@ func Refresh(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func Logout(w http.ResponseWriter, r *http.Request) {
-	http.SetCookie(w, &http.Cookie{
+func Logout(c *gin.Context) {
+	http.SetCookie(c.Writer, &http.Cookie{
 		Name:    "token",
 		Expires: time.Now(),
 	})

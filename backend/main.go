@@ -26,13 +26,13 @@ func main() {
 	router.GET("/ws/joinRoom/:roomId", wsHandler.JoinRoom)
     router.GET("/ws/initiateGame/:roomId", wsHandler.InitiateGame)
 
+    // Auth endpoints
+	router.POST("/login", auth.Login)
+	router.POST("/signup", auth.SignUp)
+	router.GET("/refresh", auth.Refresh)
+	router.POST("/logout", auth.Logout)
+
 	router.Run()
-
-	http.HandleFunc("/login", auth.Login)
-	http.HandleFunc("/signup", auth.SignUp)
-	http.HandleFunc("/refresh", auth.Refresh)
-	http.HandleFunc("/logout", auth.Logout)
-
 	auth.ConnectToDatabase()
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
