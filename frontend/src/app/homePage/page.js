@@ -18,28 +18,45 @@ const HomePage = () => {
         </nav>
       </header>
       <div className={styles.container}>
-        <div className={styles["left-panel"]}>
-          <p>
-            P<span className={styles["red-letter-2"]}>I</span>NG, a large area
-            game
-            <br />
-            of hide and seek in the
-            <br />
-            University of <br />
-            Manchester
-          </p>
-          <div className={styles["how-to-pair"]}>
-            <ion-icon
-              name="location"
-              style={{ color: "red", fontSize: "70px" }}
-            ></ion-icon>
-            <div className={styles["how-to-play"]}>HOW TO PLAY PING</div>
+        <div className={styles["top-container"]}>
+          <div className={styles["left-panel"]}>
+            <p>
+              P<span className={styles["red-letter-2"]}>I</span>NG, a large area
+              game
+              <br />
+              of hide and seek in the
+              <br />
+              University of <br />
+              Manchester
+            </p>
+            <div className={styles["how-to-pair"]}>
+              <ion-icon
+                name="location"
+                className={styles["location-icon"]}
+                
+              ></ion-icon>
+              <div className={styles["how-to-play"]}>HOW TO PLAY PING</div>
+            </div>
+          </div>
+          <div className={styles["right-panel"]}>
+            <Link href="/roomPage1">
+              <button className={styles["start-game-btn"]}>START GAME</button>
+            </Link>
           </div>
         </div>
-        <div className={styles["right-panel"]}>
-          <Link href="/roomPage1">
-            <button className={styles["start-game-btn"]}>START GAME</button>
-          </Link>
+        <div className={styles["bottom-container"]}>
+          <div className={styles["leaderboards-title"]}>LEADERBOARDS</div>
+          <div className={styles["leaderboards-body"]}>
+            <div>
+              TOP SEEKRES
+            </div>
+            <div>
+              TOTAL WINS
+            </div>
+            <div>
+              TOP HIDERS
+            </div>
+          </div>
         </div>
       </div>
       <script

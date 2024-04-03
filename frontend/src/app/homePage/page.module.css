@@ -36,12 +36,18 @@
 }
 
 .container {
-    display: flex;
-    height: 90vh;
+    height: 180vh;
     width: 100vw;
     margin-top: 10vh;
     font-size: 2em;
 }
+.top-container{
+    display: flex;
+    padding: 0px;
+    margin: 0px;
+    height: 90vh;
+}
+
 
 .left-panel {
     padding: 5.65vw 0px 0px 5px;
@@ -63,16 +69,24 @@
 }
 
 .how-to-pair {
-    margin-left: 76px;
+    margin-left: 40px;
     display: flex;
     justify-content: left;
+    position: relative;
 }
 
+.how-to-pair ion-icon{
+    color: red;
+    font-size: 5vw;
+    position: absolute; 
+    bottom: 0;
+
+}
 .how-to-play {
     font-family: 'Pixelify Sans', sans-serif;
     font-weight: bold;
     font-size: 2.5vw;
-    padding: 2.5vw 0px 0px 16px;
+    padding: 2.5vw 0px 0px 5vw;
     text-transform: uppercase;
     letter-spacing: 4px;
 }
@@ -82,7 +96,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(05 05 0.5, 1);
     text-align: center;
     /* padding-top: 22.150vw; */
 }
@@ -105,8 +118,40 @@
     color: rgb(207, 203, 203);
 }
 
-.fa {
-    display: inline-block;
-    font: bold 5.5vw FontAwesome;
-    color: #b83933;
+.bottom-container{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 0px;
+    margin: 0px;
+    height: 90vh;
+    background-color: #F1F1F1F1;
+}
+
+.leaderboards-title{
+    height:15vh;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    padding-top: 30px;
+}
+
+.leaderboards-body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    padding: 0px 5vw;
+    margin: 0px;
+}
+
+.leaderboards-body div{
+    background-color: #e1e1e1;
+    height: 70vh;
+    width: 27vw;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    padding-top: 25px;
+    border-radius: 30px;
 }
