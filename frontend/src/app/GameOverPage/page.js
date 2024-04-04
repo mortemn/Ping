@@ -53,9 +53,11 @@ export default function Home() {
                         </div>
                     </div>
                 </div>
-                <button className={styles.btn}>Exit</button>
-                <button className={styles.btn}>Continue</button>
+                <div className={styles.btn_container}>
+                    <button className={styles.btn}>Exit</button>
+                    <button className={styles.btn}>Continue</button>
+                </div>
             </div>
         </body>
     );
-}
+};

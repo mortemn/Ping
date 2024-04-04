@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
 
-
 .logo {
     font-size: 3em;
     user-select: none;
@@ -9,7 +8,7 @@
 .navigation .btnhome {
     width: 130px;
     height: 50px;
-    background: transparent;
+    background: lightgray;
     border: 2px solid black;
     outline: none;
     border-radius: 6px;
@@ -17,7 +16,6 @@
     font-size: 1.1em;
     color: black;
     font-weight: 500;
-    margin-left: 720px;
     transition: .5s;
 }
 
@@ -30,25 +28,26 @@
     position: relative;
     width: 600px;
     height: 600px;
+    margin-top: 50px;
+    margin-bottom: 150px;
     background: transparent;
-    /* border: 1px solid rgba(255, 255, 255, 0);
+    border: 1px solid rgba(255, 255, 255, 0);
     box-shadow: 0 0 30px rgba(0, 0, 0, .5);
-    border-radius: 20px; */
+    border-radius: 20px;
     text-align: center;
 }
 
 .title {
     color: rgb(188, 1, 1);
-    padding-bottom: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
 }
-
 
 .scoreboard {
     width: 100%;
     border: 2px solid #ddd;
     border-radius: 10px;
     overflow: hidden;
-    
 }
 
 .header {
@@ -90,7 +89,6 @@
     border-bottom: none;
 }
 
-
 .btn { 
     width: 150px;
     height: 50px;
@@ -102,9 +100,7 @@
     color: black;
     font-weight: 500;
     background-color: darkgray;  
-    margin-top: 50px;
     margin-right: 50px;
-
 }
 
 .btn:last-child {
@@ -113,4 +109,53 @@
 
 .btn:hover {
     background-color: lightgray;
+} 
+
+.btn_container {
+    width: 300px;
+    display: flex;
+    position: relative;
+    height: 100px;
+    padding-top: 40px;
+    margin-left: 25%;
+    /* border: black solid 1px; */
+}
+
+@media screen and (max-width: 1080px) {
+    .logo {
+        position: absolute; 
+        left: 15px;
+    } 
+
+    .navigation .btnhome {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
+
+    .wrapper {
+        margin-left: 25%;
+        margin-right: 25%;
+        width: 300px;
+    }
+
+    .header_item {
+        padding-left: 7px;
+        padding-right: 7px;
+    }
+
+    .btn_container {
+        align-items: center;
+        margin-left: 0%;
+    }
+
+    .btn {
+        margin-left: 5px;
+        margin-right: 25px;
+    }
+
+    .btn:last-child {
+        margin-right: 5px;
+    }
+
 }
