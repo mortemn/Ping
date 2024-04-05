@@ -16,7 +16,6 @@
     font-size: 1.1em;
     color: black;
     font-weight: 500;
-    margin-left: 720px;
     transition: .5s;
 }
 
@@ -29,6 +28,8 @@
     position: relative;
     width: 500px;
     height: 540px;
+    margin-top: 75px;
+    margin-bottom: 150px;
     background: transparent;
     border: 1px solid rgba(255, 255, 255, 0);
     border-radius: 20px;
@@ -128,12 +129,14 @@
 
     .navigation .btnhome {
         position: absolute;
-        top: 20px;
+        top: 15px;
         right: 20px;
     }
 
     .wrapper {
         width: 300px;
+        margin-left: 10%;
+        margin-right: 10%;
     }
 
     .radio_label {
@@ -142,5 +145,11 @@
 
     .dropdown {
         width: 10em;
+    }
+}
+
+@media screen and (max-width: 332px) {
+    .radio_label {
+        font-size: 17px;
     }
 }
