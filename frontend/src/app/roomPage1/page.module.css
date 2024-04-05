@@ -16,7 +16,6 @@
     font-size: 1.1em;
     color: black;
     font-weight: 500;
-    margin-left: 720px;
     transition: .5s;
 }
 
@@ -62,9 +61,10 @@
 .text {
     justify-content: center;
     align-items: center;
+    margin-top: 50px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 800px) {
     .logo {
         position: absolute;
         left: 15px;
@@ -72,16 +72,24 @@
 
     .navigation .btnhome {
         position: absolute;
-        top: 20px;
+        top: 15px;
         right: 20px;
+    }
+
+    .text {
+        margin: 25px;
     }
 
     .btns {
         flex-direction: column;
-        gap: 50px;
+        margin-top: 25px;
+        gap: 0px;
     }
 
     .btn {
         height: 150px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 50px;
     }
 }
