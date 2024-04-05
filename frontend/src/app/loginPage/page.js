@@ -38,12 +38,16 @@ export default function Home() {
                             <label>Password</label>
                         </div>
                         <div className={styles.remember_forgot}>
-                            <label><input type="checkbox" />Remember me</label>
-                            <a href="#">Forgot Password?</a>
+                            <div>
+                                <label><input type="checkbox"/>Remember me</label>
+                            </div>
+                            <div>
+                                <a href="#">Forgot Password?</a>
+                            </div>
                         </div>
                         <button type="submit" className={styles.btn} onClick={clickHandler}>Login</button>
                         <div className={styles.login_register} >
-                            <p>Don&apos;t have an account?
+                            <p>Don&apos;t have an account?&nbsp;
                                 <a href="#" className={styles.register_link}>Register</a>
                             </p>
                         </div>
