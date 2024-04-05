@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
+
 .logo {
     font-size: 3em;
     user-select: none;
@@ -13,7 +14,6 @@
     justify-content: space-between;
 }
 
-
 .navigation .btn {
     width: 130px;
     height: 50px;
@@ -25,9 +25,8 @@
     font-size: 1.1em;
     color: black;
     font-weight: 500;
-    margin-left: 20px;
-    /* margin-left: 720px; */
     transition: .5s;
+    margin-right: 15px;
 }
 
 .navigation .btn:hover {
@@ -36,26 +35,22 @@
 }
 
 .container {
-    height: 180vh;
-    width: 100vw;
-    margin-top: 10vh;
     font-size: 2em;
 }
+
 .top-container{
     display: flex;
     padding: 0px;
     margin: 0px;
-    height: 90vh;
+    /* height: 700px; */
 }
 
-
 .left-panel {
-    padding: 5.65vw 0px 0px 5px;
-    padding-left: 6.43vw;
-    padding-right: 6.43vw;
-    flex: 49;
+    padding: 5.65vw 6.43vw 0px 6.43vw;
+    margin-left: -55px;
     background-color: rgba(225, 225, 225, 1);
     text-align: center;
+    height: 700px;
 }
 
 .left-panel p {
@@ -64,7 +59,6 @@
     padding-left: 35px;
     padding-right: 35px;
     letter-spacing: 5px;
-    font-size: 2.5vw;
     text-transform: uppercase;
 }
 
@@ -77,15 +71,15 @@
 
 .how-to-pair ion-icon{
     color: red;
-    font-size: 5vw;
+    font-size: 2.0em;
     position: absolute; 
     bottom: 0;
-
 }
+
 .how-to-play {
     font-family: 'Pixelify Sans', sans-serif;
     font-weight: bold;
-    font-size: 2.5vw;
+    margin-left: 25px;
     padding: 2.5vw 0px 0px 5vw;
     text-transform: uppercase;
     letter-spacing: 4px;
@@ -97,7 +91,6 @@
     justify-content: center;
     align-items: center;
     text-align: center;
-    /* padding-top: 22.150vw; */
 }
 
 .start-game-btn {
@@ -123,13 +116,11 @@
     flex-direction: column;
     text-align: center;
     padding: 0px;
-    margin: 0px;
-    height: 90vh;
     background-color: #F1F1F1F1;
 }
 
 .leaderboards-title{
-    height:15vh;
+    height:100px;
     font-size: 1.5em;
     font-weight: bold;
     text-transform: uppercase;
@@ -142,16 +133,102 @@
     flex-direction: row;
     justify-content: space-between; /* Center horizontally */
     align-items: center; /* Center vertically */
-    padding: 0px 5vw;
-    margin: 0px;
+    padding: 0px 10vw;
+    margin-bottom: 50px;
 }
 
-.leaderboards-body div{
+.leaderboards-body div {
     background-color: #e1e1e1;
-    height: 70vh;
+    height: 500px;
     width: 27vw;
     text-transform: uppercase;
     letter-spacing: 3px;
     padding-top: 25px;
+    margin: 15px 5px;
     border-radius: 30px;
+}
+
+@media screen and (max-width: 900px) {
+    .start-game-btn {
+        margin-right: 32px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .logo {
+        position: absolute; 
+        left: 15px;
+    } 
+
+    .navigation {
+        position: absolute;
+        top: 15px;
+        right: 20px;
+    }
+
+    .left-panel {
+        margin-left: 0px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+}
+
+@media screen and (max-width: 640px) {
+
+    .top-container {
+        flex-direction: column;
+    }
+
+    .left-panel {
+        height: 800px;
+        /* leave space for game instruction */
+    }
+
+    .how-to-pair {
+        margin-left:15%;
+        margin-right:15%;
+    }
+
+    .right-panel {
+        margin: 50px 0px;
+    }
+
+    .bottom-container {
+        position: relative;
+    }
+
+    .leaderboards-title {
+        width: 100%;
+        font-size: 1.1em;
+    }
+
+    .leaderboards-body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .leaderboards-body div {
+        height: 250px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    .navigation {
+        flex-direction: column;
+    }
+
+    .navigation .btn {
+        height: 30px;
+        margin-top: -10px;
+        margin-bottom: 15px;
+    }
+
+    .leaderboards-title{
+        font-size: 1.1em;
+    }
 }

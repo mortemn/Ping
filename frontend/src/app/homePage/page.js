@@ -33,7 +33,6 @@ const HomePage = () => {
               <ion-icon
                 name="location"
                 className={styles["location-icon"]}
-                
               ></ion-icon>
               <div className={styles["how-to-play"]}>HOW TO PLAY PING</div>
             </div>
@@ -47,15 +46,9 @@ const HomePage = () => {
         <div className={styles["bottom-container"]}>
           <div className={styles["leaderboards-title"]}>LEADERBOARDS</div>
           <div className={styles["leaderboards-body"]}>
-            <div>
-              TOP SEEKRES
-            </div>
-            <div>
-              TOTAL WINS
-            </div>
-            <div>
-              TOP HIDERS
-            </div>
+            <div>TOP SEEKRES</div>
+            <div>TOTAL WINS</div>
+            <div>TOP HIDERS</div>
           </div>
         </div>
       </div>

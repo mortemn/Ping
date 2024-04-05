@@ -40,8 +40,8 @@ export default function Home() {
                             
                         </div>
                         <button type="submit" className={styles.btn} >Login</button>
-                        <div className={styles.login_register} >
-                            <p>Already have an account?
+                        <div className={styles.login_register}>
+                            <p>Already have an account?&nbsp;
                                 <a href="#" className={styles.login_link}>Login</a>
                             </p>
                         </div>
