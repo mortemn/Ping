@@ -21,6 +21,13 @@ type CreateRoomRequest struct {
     ID string `json:"id"`
 }
 
+type InitiateGameRequest struct {
+    ID string `json:"id"`
+    Timer string `json:"timer"`
+    Map string `json:"map"`
+    Seeker string `json:"seeker"`
+}
+
 func (h *Handler) CreateRoom(c *gin.Context) {
     var req CreateRoomRequest
     if err := c.ShouldBindJSON(&req); err != nil {
@@ -97,31 +104,19 @@ func (h *Handler) JoinRoom(c *gin.Context){
 }
 
 func (h *Handler) InitiateGame(c *gin.Context){
-    // function called, assign value to gameOver, starts timer, loop to check game status and run validator
-    roomId := c.Param("roomId")
-    timerChoice := c.Query("game_duration")
-    mapChoice := c.Query("map_choice")
-    seekerNumber := c.Query("seeker_number")
-    gameOver := c.Query("over")
+    var req InitiateGameRequest
+
+    if err := c.ShouldBindJSON(&req); err != nil {
+        c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+        return
+    }
     
     gs := <- h.hub.Broadcast
 
-    go gameTimer(timerChoice, roomId)
-    mapBoundary(mapChoice)
-    assignSeeker(seekerNumber, roomId, h.hub)
+    gs.Message = "Game has started!"
+    gs.Started = true
 
-    for {
-        // for-loop to constantly check for game status (gameOver and hiderCount)
-        if (gameOver == "true" || gs.HiderCount == 0){
-            update := &GameState{
-                Over: true,
-                RoomId: roomId,
-                Message: "Game is Over!",
-                Timer: "0",
-                HiderCount: 0,
-            }
-            h.hub. Broadcast <- update
-            break
-        }
-    }
+    h.hub.Broadcast <- gs
+
+    c.JSON(http.StatusOK, req)
 }

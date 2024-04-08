@@ -24,7 +24,7 @@ func main() {
 	// Websocket endpoints
 	router.POST("/ws/createRoom", wsHandler.CreateRoom)
 	router.GET("/ws/joinRoom/:roomId", wsHandler.JoinRoom)
-    router.GET("/ws/initiateGame/:roomId", wsHandler.InitiateGame)
+    router.POST("/ws/initiateGame/:roomId", wsHandler.InitiateGame)
 
     // Auth endpoints
 	router.POST("/login", auth.Login)

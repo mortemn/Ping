@@ -5,12 +5,13 @@ import (
 	"math/rand"
 	"strconv"
 	"time"
+    "fmt"
 )
 
 var timePassed int = 0
 
 // Starts game timer.
-func gameTimer(gameDuration string, roomId string) (gs *GameState) {
+func gameTimer(h *Hub, gameDuration string, roomId string) {
 
     var timer int
     switch gameDuration{
@@ -31,14 +32,18 @@ func gameTimer(gameDuration string, roomId string) (gs *GameState) {
         <-gametimer.C
         timePassed += 1
         updateTimer(timePassed, roomId)
+        fmt.Print("Time passed: ", timePassed)
+    }
+
+    gs := &GameState{
+        Over: true,
+        Started: true,
+        RoomId: roomId,
+        Message: "Game is Over!",
+        Timer: "0",
     }
     
-    gs.Over = true
-    gs.RoomId = roomId
-    gs.Message = "Game is Over!"
-    gs.Timer = "0"
-    // Ends the game timer and game.
-    return gs
+    h.Broadcast <- gs 
 }
 
 func updateTimer(timePassed int, roomId string) (gs *GameState) {
@@ -98,15 +103,18 @@ func mapBoundary(choice string){
 }
 
 
-func handleCoords(c *Client, x float64, y float64, hub *Hub){
-    // Main Function to handle the coordinate updates from the frontend.
-    mapCoords(c, x, y, hub)
-    playerCoords(c, x, y, hub)
+func handleCoords(c *Client, hub *Hub) *GameState{
+    gs := <- c.State
+    mapCoords(c, hub)
+    playerCoords(c, gs, hub)
+
+    return gs
 }
 
+func mapCoords(c *Client, hub *Hub){
+    x := c.Coords.X
+    y := c.Coords.Y
 
-func mapCoords(c *Client, x float64, y float64, hub *Hub){
-    // To check player-map boundary overlaps.
     var boundaryWarning string = "Warning! Please Stay in Map Boundary!"
     if (x < topLeftX || y > topLeftY) {    
         c.Socket.WriteJSON(boundaryWarning)
@@ -120,13 +128,12 @@ func mapCoords(c *Client, x float64, y float64, hub *Hub){
 }
 
 
-func playerCoords(c *Client, x float64, y float64, hub *Hub){
-    // To check seeker-hider boundary overlaps.
+func playerCoords(c *Client, gs *GameState, hub *Hub){
+    x := c.Coords.X
+    y := c.Coords.Y
 
     var boundary float64 = 0.0001
     // Determine boundary(radius) of each player.
-
-    gs := <- c.State
 
     for _, oc := range hub.Rooms[c.RoomId].Clients {
     // 'c' for 'current client'; 'oc' for 'other client'.
@@ -169,11 +176,10 @@ func playerCoords(c *Client, x float64, y float64, hub *Hub){
 
 func playerScore(c *Client){
      var scoreint int = c.Score
-     var playerRole bool = c.Seeker
 
-     if (playerRole == false) {
+     if (c.Seeker == false) {
      // score count for hiders
-         scoreint = timePassed * 400
+         c.Score = timePassed * 400
          // 400 for every minute hidden
      } else { 
      // score count for seeker
@@ -192,16 +198,9 @@ func assignSeeker(seekerNumber string, roomId string, hub *Hub) {
             randomValue := rand.Intn(2)
             // obtain random value
             if randomValue == 1 && oc.Seeker == false {
-                pickSeeker(oc)
+                oc.Seeker = true
                 seekers -= 1
             }
         }
     }
 }
-
-func pickSeeker(c *Client){
-    // Change seeker's status to seeker
-    c.Seeker = true
-}
-// created external function to assign seeker because multiple return values needed
-// if returned value in assignSeeker function then it may end assignSeeker function before all seeker are assigned.

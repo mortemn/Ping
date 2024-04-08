@@ -21,6 +21,7 @@ type Client struct {
 
 // @Peiyee: Add variables relevant to the game state here.
 type GameState struct {
+    Started bool `json:"started"`
     Over    bool `json:"over"`
     RoomId  string `json:"room_id"`
     Message string `json:"message"`
@@ -70,11 +71,19 @@ func (c *Client) Read(hub *Hub) {
         }
     }
 
-    // Parses the coordinates from the frontend into float and updates the game state.
     arr := strings.Split(string(coords), ",")
-    x, _ := strconv.ParseFloat(arr[0], 64)
-    y, _ := strconv.ParseFloat(arr[1], 64)
 
-    handleCoords(c, x, y, hub)
+    c.Coords.X, err = strconv.ParseFloat(arr[0], 64)
+    if err != nil {
+        log.Printf("error: %v", err)
+    }
 
+    c.Coords.Y, err = strconv.ParseFloat(arr[1], 64)
+    if err != nil {
+        log.Printf("error: %v", err)
+    }
+
+    state := handleCoords(c, hub)
+    
+    hub.Broadcast <- state
 }
