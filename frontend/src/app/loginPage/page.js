@@ -2,16 +2,17 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'
 
 export default function Home() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const router = useRouter()
 
-    function clickHandler() {
-        // query server endpoint using JSON
+    function login() {
         var data = {
-            "username": email,
-            "password": password
+            "Username": username,
+            "Password": password
         };
 
         fetch('/login', {
@@ -23,13 +24,17 @@ export default function Home() {
         })
             .then(response => {
                 if (!response.ok) {
+                    console.log(response)
                     throw new Error('Invalid Username or Password');
+                } else {
+                    return response.json()
                 }
-                return response.json();
             })
-            .then(user => {
-                // Handle successful login, if needed
-                console.log('Login successful:', user);
+            .then(data => {
+                console.log("login successful")
+                const { token } = data.json();
+                localStorage.setItem('token', token);
+                router.push('/homePage');
             })
             .catch(error => {
                 console.error('Login error:', error.message);
@@ -69,10 +74,10 @@ export default function Home() {
                                 <a href="#">Forgot Password?</a>
                             </div>
                         </div>
-                        <button type="submit" className={styles.btn} onClick={clickHandler}>Login</button>
+                        <button type="submit" className={styles.btn} onClick={login}>Login</button>
                         <div className={styles.login_register} >
                             <p>Don&apos;t have an account?&nbsp;
-                                <a href="#" className={styles.register_link}>Register</a>
+                                <a href="/RegistrationPage" className={styles.register_link}>Register</a>
                             </p>
                         </div>
                     </form>
