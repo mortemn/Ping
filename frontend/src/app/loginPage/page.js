@@ -8,10 +8,34 @@ export default function Home() {
     const [password, setPassword] = useState('')
 
     function clickHandler() {
-        console.log(email)
-        console.log(password)
         // query server endpoint using JSON
+        var data = {
+            "username": email,
+            "password": password
+        };
+
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Invalid Username or Password');
+                }
+                return response.json();
+            })
+            .then(user => {
+                // Handle successful login, if needed
+                console.log('Login successful:', user);
+            })
+            .catch(error => {
+                console.error('Login error:', error.message);
+            });
     }
+
 
     return (
         <body>
@@ -39,7 +63,7 @@ export default function Home() {
                         </div>
                         <div className={styles.remember_forgot}>
                             <div>
-                                <label><input type="checkbox"/>Remember me</label>
+                                <label><input type="checkbox" />Remember me</label>
                             </div>
                             <div>
                                 <a href="#">Forgot Password?</a>
