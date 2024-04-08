@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
+
+
+.logo {
+    font-size: 3em;
+    user-select: none;
+}
+
+.navigation .btnhome {
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid black;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: black;
+    font-weight: 500;
+    margin-left: 720px;
+    transition: .5s;
+}
+
+.navigation .btnhome:hover {
+    background: darkgray;
+    color: #162938;
+}
+
+.form {
+    width: 360px;
+    height: 400px;
+    background: lightgray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 30px;
+    gap: 20px;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+  }
+
+.title {
+  font-size: 20px;
+  color: #222;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+.input_container {
+  width: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 13px;
+  margin-bottom: 40px;
+}
+
+.input_container input {
+  background: #fff;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  border: none;
+  outline: none;
+  border-radius: 7px;
+  caret-color: #222;
+  color: #222;
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.btn {
+  width: 240px;
+  height: 60px;
+  border: none;
+  background: darkgray;
+  color: #fff;
+  font-weight: 600;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 10px
+
+}
+
+.btn:hover {
+  background: #575757;
+  transition: 0.3s;
+}
+
+.btn:disabled {
+  opacity:0.8;
+  cursor: not-allowed;
+}
