@@ -12,18 +12,6 @@ export default function Home() {
     const router = useRouter()
     const playerID = uuidv4()
 
-    function blockMainThread(milliseconds) {
-        const startTime = Date.now();
-        while (Date.now() - startTime < milliseconds) {
-            // Do some computational work to keep the CPU busy
-            // This can be a simple loop or any other computationally intensive task
-            let i = 0;
-            while (i < 1000000) {
-                i++;
-            }
-        }
-    }
-
     function login() {
         var data = {
             "Username": username,
