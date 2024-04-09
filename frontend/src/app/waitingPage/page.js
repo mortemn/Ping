@@ -17,11 +17,11 @@ export default function Home() {
                 className={styles["location-icon"]}
             ></ion-icon> */}
 
-            <form className={styles.form}>
+            <div className={styles.text_container}>
                 <span className= {styles.title}>Players Joining, Please Wait.</span>
                 <span className= {styles.title}>Game Starting Soon...</span>
                 <button className= {styles.btn} type="submit" disabled>display number of players joined</button>
-            </form>
+            </div>
             {/* <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
             <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script> */}
         </body>

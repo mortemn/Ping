@@ -15,7 +15,7 @@
   margin: 0 20px;
 }
 
-.form {
+.text_container {
     width: 360px;
     height: 400px;
     background: lightgray;
@@ -77,4 +77,16 @@
 .logo span {
   animation: jump 2s infinite;
   display: inline-block;
+}
+
+@media screen and (max-width: 768px) {
+  .logo span {
+    margin-left: 5px;
+    margin: 5px;
+  }
+
+  .text_container{
+    margin-left: 5%;
+    margin-right: 5%;
+  }
 }

@@ -1,6 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
 
-
 .logo {
     font-size: 3em;
     user-select: none;
@@ -17,7 +16,6 @@
     font-size: 1.1em;
     color: black;
     font-weight: 500;
-    margin-left: 720px;
     transition: .5s;
 }
 
@@ -42,7 +40,7 @@
   }
 
 .title {
-  font-size: 20px;
+  font-size: 1.8em;
   color: #222;
   font-weight: 700;
   margin-bottom: 40px;
@@ -77,7 +75,7 @@
   height: 60px;
   border: none;
   background: darkgray;
-  color: #fff;
+  color: black;
   font-weight: 600;
   font-size: 20px;
   cursor: pointer;
@@ -93,4 +91,22 @@
 .btn:disabled {
   opacity:0.8;
   cursor: not-allowed;
+}
+
+@media screen and (max-width: 768px) {
+  .logo {
+      position: absolute;
+      left: 15px;
+  }
+
+  .navigation .btnhome {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+  }
+
+  .form {
+    margin-left: 5%;
+    margin-right: 5%;
+  }
 }
