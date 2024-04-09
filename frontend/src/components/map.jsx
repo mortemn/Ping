@@ -10,7 +10,6 @@ export function Map() {
     
     const { wid, hei } = WindowDimensions();
 
-
     useEffect(() => {
         const initMap = async () => {
             const loader = new Loader({
@@ -34,6 +33,8 @@ export function Map() {
                 zoom: 17,
                 mapTypeControl: false,
                 fullscreenControl: false,
+                streetViewControl: false,
+                zoomControl: false,
                 mapId: 'MY_NEXTJS_MAPID'
             }
 
@@ -56,8 +57,9 @@ export function Map() {
                     console.log(pos);
                     map.setCenter(pos);
                     marker.setPosition(pos);
-                }
-                );
+                    },
+                    function (error) { },
+                    {enableHighAccuracy: true});
             }else{
                 //Handle no geolocation
                 const defaultPosition = {
@@ -83,8 +85,9 @@ export function Map() {
                         console.log(pos);
                         map.setCenter(pos);
                         marker.setPosition(pos);
-                    }
-                    );
+                    },
+                    function (error) { },
+                    {enableHighAccuracy: true});
                 }else{
                     //Handle no geolocation
                     const defaultPosition = {
@@ -94,7 +97,7 @@ export function Map() {
                     map.setCenter(defaultPosition);
                     marker.setPosition(defaultPosition);
                 }
-                let delayres = await delay(3000);
+                let delayres = await delay(1000);
                 trackLocation();
             }
     
