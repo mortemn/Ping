@@ -106,10 +106,11 @@ export default function Home() {
                             <label>Password</label>
                         </div>
                         <div className={styles.remember_forgot}>
-                            <label><input type="checkbox" />I agree to the terms and conditions</label>
+                            <label><input type="checkbox" />I agree to the &nbsp;<a href="/tncPage" className={styles.tnc}>Terms and Conditions.</a></label>
 
                         </div>
                         <button type="submit" className={styles.btn} onClick={signUp} >Register</button>
+                        <button type="submit" className={styles.btn}>Register</button>
                         <div className={styles.login_register}>
                             <p>Already have an account?&nbsp;
                                 <a href="/loginPage" className={styles.login_link}>Login</a>
