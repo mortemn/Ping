@@ -211,19 +211,3 @@
         width: 100%;
     }
 }
-
-@media screen and (max-width: 460px) {
-    /* .navigation {
-        flex-direction: column;
-    } */
-
-    /* .navigation .btn {
-        height: 30px;
-        margin-top: -10px;
-        margin-bottom: 15px;
-    } */
-
-    /* .leaderboards-title{
-        font-size: 1.1em;
-    } */
-}
