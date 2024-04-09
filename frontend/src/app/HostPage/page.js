@@ -2,7 +2,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import { useState } from 'react';
-import Link from "next/link";
 
 export default function Home() {
 
@@ -23,9 +22,7 @@ export default function Home() {
             <header>
                 <h2 className={styles.logo}>P<span style={{ color: 'red' }}>I</span>NG</h2>
                 <nav className={styles.navigation}>
-                    <Link href = "./homePage">
                     <button className={styles.btnhome}>Home</button>
-                    </Link>
                 </nav>
             </header>
 
@@ -71,12 +68,11 @@ export default function Home() {
                     <div className={styles.dropdown_container}>
                         <select name="dropdown" id="dropdown" className={styles.dropdown} onChange={e => setMap(e.target.options[e.target.selectedIndex].text)}>
                             <option value="optionA" >Oxford Road</option>
+                            <option value="optionB" >UoM Campus</option>
                             <option value="optionC" >Whitworth Park</option>
                         </select>
                     </div>
-                    <Link href = "waitingPage">
-                        <button className={styles.btn} onClick={clickHandler} >Start Game</button>
-                    </Link>
+                    <button className={styles.btn} onClick={clickHandler} >Start Game</button>
                 </div>
             </div>
 
