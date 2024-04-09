@@ -36,57 +36,60 @@
 
 .container {
     font-size: 2em;
+    width: 100%;
 }
 
 .top-container{
     display: flex;
-    padding: 0px;
-    margin: 0px;
+    flex-direction: row;
+    width: 100%;
 }
 
 .left-panel {
-    padding: 5.65vw 6.43vw 0px 6.43vw;
-    margin-left: -55px;
+    width: 75%;
     background-color: rgba(225, 225, 225, 1);
     text-align: center;
-    height: 700px;
+    height: max-content;
 }
 
 .left-panel p {
     font-weight: bold;
     line-height: 1.6;
-    padding-left: 35px;
-    padding-right: 35px;
+    padding: 35px 35px;
     letter-spacing: 5px;
     text-transform: uppercase;
 }
 
 .how-to-pair {
-    margin-left: 40px;
+    margin-bottom: 40px;
     display: flex;
-    justify-content: left;
-    position: relative;
+    justify-content: center;
 }
 
 .how-to-pair ion-icon{
     color: red;
     font-size: 2.0em;
-    position: absolute; 
     bottom: 0;
 }
 
 .how-to-play {
     font-family: 'Pixelify Sans', sans-serif;
     font-weight: bold;
-    margin-left: 25px;
-    padding: 2.5vw 0px 0px 5vw;
     text-transform: uppercase;
     letter-spacing: 4px;
+    display:flex;
+    align-items: center;
+}
+
+.instructions {
+    line-height: 50px;
+    margin: 25px 0px 100px 0px;
+    padding: 0px 50px;
 }
 
 .right-panel {
-    flex: 37;
     display: flex;
+    width: 25%;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -97,7 +100,7 @@
     color: white;
     border: none;
     padding: 38px 10px 42px 20px;
-    margin-left: 32px;
+    /* margin-left: 32px; */
     border-radius: 100px;
     cursor: pointer;
     font-size: 25px;
@@ -147,11 +150,6 @@
     border-radius: 30px;
 }
 
-@media screen and (max-width: 900px) {
-    .start-game-btn {
-        margin-right: 32px;
-    }
-}
 
 @media screen and (max-width: 768px) {
     .logo {
@@ -165,58 +163,24 @@
         right: 20px;
     }
 
-    .left-panel {
-        margin-left: 0px;
-    }
-
-    .container {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-    }
-}
-
-@media screen and (max-width: 640px) {
-
     .top-container {
         flex-direction: column;
     }
 
     .left-panel {
-        height: 800px;
-        /* leave space for game instruction */
-    }
-
-    .how-to-pair {
-        margin-left:15%;
-        margin-right:15%;
+        width: 100%;
     }
 
     .right-panel {
         margin: 50px 0px;
-    }
-
-    .bottom-container {
-        position: relative;
-    }
-
-    .leaderboards-title {
-        width: 100%;
-        font-size: 1.1em;
-    }
-
-    .leaderboards-body {
-        display: flex;
-        flex-direction: column;
-    }
-
-    .leaderboards-body div {
-        height: 250px;
         width: 100%;
     }
 }
 
-@media screen and (max-width: 460px) {
+@media screen and (max-width: 640px) {
+    .header{
+        height: 90px;
+    }
     .navigation {
         flex-direction: column;
     }
@@ -226,8 +190,40 @@
         margin-top: -10px;
         margin-bottom: 15px;
     }
-
-    .leaderboards-title{
-        font-size: 1.1em;
+    
+    .bottom-container {
+        position: relative;
     }
+    
+    .leaderboards-title {
+        width: 100%;
+        font-size: 0.9em;
+    }
+
+    .leaderboards-body {
+        display: flex;
+        flex-direction: column;
+        font-size: 0.6em;
+    }
+
+    .leaderboards-body div {
+        height: 250px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 460px) {
+    /* .navigation {
+        flex-direction: column;
+    } */
+
+    /* .navigation .btn {
+        height: 30px;
+        margin-top: -10px;
+        margin-bottom: 15px;
+    } */
+
+    /* .leaderboards-title{
+        font-size: 1.1em;
+    } */
 }

@@ -29,5 +29,5 @@ header {
   justify-content: space-between;
   align-items: center;
   z-index: 99;
-  background-color: lightgray;
+  background-color: darkgrey;
 }

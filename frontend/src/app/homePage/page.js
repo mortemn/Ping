@@ -36,6 +36,14 @@ const HomePage = () => {
               ></ion-icon>
               <div className={styles["how-to-play"]}>HOW TO PLAY PING</div>
             </div>
+            <div className={styles["instructions"]}>
+              1. Host or Join a room with your friends.<br/>
+              2. Hiders will hide while seekers will seek.<br/>
+              3. When hiders are caught, they will be switched over to the<br/> seekers team and continue the game as seekers.<br/>
+              4. The game ends when the time is up or all hiders have been caught.<br/>
+              5. Hide longer to accumulate more scores;<br/> Catch more hiders to accumulate more scores.<br/>
+              6. Have fun! <br/>Remember: you can run but you can't hide...<br/>
+            </div>
           </div>
           <div className={styles["right-panel"]}>
             <Link href="/roomPage">
