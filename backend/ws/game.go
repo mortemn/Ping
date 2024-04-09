@@ -108,6 +108,10 @@ func handleCoords(c *Client, hub *Hub) *GameState{
     mapCoords(c, hub)
     playerCoords(c, gs, hub)
 
+    if gs.HiderCount <= 0 {
+        gs.Over = true
+    }
+
     return gs
 }
 
@@ -188,19 +192,28 @@ func playerScore(c *Client){
      }
 }
 
+func getRandomClientId(r *Room) string {
+    ClientIds := []string{}
 
-func assignSeeker(seekerNumber string, roomId string, hub *Hub) {
-    // Function to assign seekers randomly
-    seekers, _ := strconv.Atoi(seekerNumber)
-    
-    for (seekers != 0) {
-        for _, oc := range hub.Rooms[roomId].Clients {
-            randomValue := rand.Intn(2)
-            // obtain random value
-            if randomValue == 1 && oc.Seeker == false {
-                oc.Seeker = true
-                seekers -= 1
-            }
+    for id, _ := range r.Clients {
+        ClientIds = append(ClientIds, id)
+    }
+
+    // Choose random client id from the list of client ids after checking if client is a seeker already.
+    for {
+        randIndex := rand.Intn(len(ClientIds))
+        if r.Clients[ClientIds[randIndex]].Seeker == false {
+            return ClientIds[randIndex]
         }
     }
+}
+
+func getPlayerCount(r *Room) int {
+    count := 0
+    for _, c := range r.Clients {
+        if c.Seeker == false {
+            count++
+        }
+    }
+    return count
 }
