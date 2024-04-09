@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import styles from "./page.module.css";
+import Link from "next/link";
 import { useState } from 'react';
 
 export default function Home() {
@@ -32,7 +33,9 @@ export default function Home() {
             <header>
                 <h2 className={styles.logo}>P<span style={{ color: 'red' }}>I</span>NG</h2>
                 <nav className={styles.navigation}>
-                    <button className={styles.btnhome}>Home</button>
+                    <Link href ="homePage">
+                        <button className={styles.btnhome}>Home</button>
+                    </Link>
                 </nav>
             </header>
 
@@ -69,7 +72,9 @@ export default function Home() {
                             <option value="optionC" >Whitworth Park</option>
                         </select>
                     </div>
-                    <button className={styles.btn} onClick={clickHandler} >Start Game</button>
+                    <Link href = "waitingPage">
+                        <button className={styles.btn} onClick={clickHandler} >Start Game</button>
+                    </Link>
                 </div>
             </div>
 

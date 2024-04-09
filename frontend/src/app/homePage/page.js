@@ -46,7 +46,7 @@ const HomePage = () => {
         <div className={styles["bottom-container"]}>
           <div className={styles["leaderboards-title"]}>LEADERBOARDS</div>
           <div className={styles["leaderboards-body"]}>
-            <div>TOP SEEKRES</div>
+            <div>TOP SEEKRS</div>
             <div>TOTAL WINS</div>
             <div>TOP HIDERS</div>
           </div>
