@@ -113,25 +113,11 @@ func (h *Handler) JoinRoom(c *gin.Context){
     clientId := c.Query("clientId")
     username := c.Query("username")
 
-    xcoord, err := strconv.ParseFloat(c.Query("xcoord"), 64)
-
-    if err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"Non integer detected in xcoord": err.Error()})
-        return
-    }
-
-    ycoord, err := strconv.ParseFloat(c.Query("ycoord"), 64)
-
-    if err != nil {
-        c.JSON(http.StatusBadRequest, gin.H{"Non integer detected in ycoord": err.Error()})
-        return
-    }
-
     client := &Client{
         Socket: conn,
         Coords: &Coords{
-            X: xcoord,
-            Y: ycoord,
+            X: 0,
+            Y: 0,
         },
         Username: username,
         ClientId: clientId,
