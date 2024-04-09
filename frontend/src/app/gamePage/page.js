@@ -5,8 +5,8 @@ import { Map } from "@/components/map";
 export default function Home() {
     return (            
         <body>
-            {/* <Map/> */}
-            <header style={{ backgroundColor: 'transparent'}}>
+            <Map/>
+            <header>
                 <div className={styles.header_widgets}>
                     <button className={styles.dropdown}>Players Caught ▾</button>
                     <div className={styles.dropdown_options}>
@@ -15,10 +15,10 @@ export default function Home() {
                         <a>Player3</a>
                     </div>
                 </div>
-                    <div className={styles.countdown}>14:39</div>
+                <h2 className={styles.logo}>P<span style={{color: 'red'}}>I</span>NG</h2>
+                <div className={styles.countdown}>14:39</div>
             </header>
             <button className={styles.button}>!</button>
-
         </body>
     );
 }

@@ -1,8 +1,5 @@
 import Head from "next/head";
 import styles from "./page.module.css";
-
-// import { faMapMarkerAlt } from "@fortawesome/free-solid-svg-icons";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Link from "next/link";
 
 const HomePage = () => {
@@ -13,8 +10,12 @@ const HomePage = () => {
           P<span className={styles["red-letter"]}>I</span>NG
         </h2>
         <nav className={styles["navigation"]}>
-          <button className={styles["btn"]}>LOG OUT</button>
-          <button className={styles["btn"]}>ACCOUNT</button>
+          <Link href="/loginPage">
+            <button className={styles["btn"]}>LOG IN</button>
+          </Link>
+          <Link href = "">
+            <button className={styles["btn"]}>ACCOUNT</button>
+          </Link>
         </nav>
       </header>
       <div className={styles.container}>
@@ -26,8 +27,7 @@ const HomePage = () => {
               <br />
               of hide and seek in the
               <br />
-              University of <br />
-              Manchester
+              University of Manchester
             </p>
             <div className={styles["how-to-pair"]}>
               <ion-icon
@@ -38,7 +38,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className={styles["right-panel"]}>
-            <Link href="/roomPage1">
+            <Link href="/roomPage">
               <button className={styles["start-game-btn"]}>START GAME</button>
             </Link>
           </div>

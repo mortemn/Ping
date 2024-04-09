@@ -1,5 +1,6 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import Link from "next/link";
 
 export default function Home() {
     return ( 	
@@ -7,15 +8,21 @@ export default function Home() {
             <header>
                 <h2 className={styles.logo}>P<span style={{color: 'red'}}>I</span>NG</h2>
                 <nav className={styles.navigation}>
-                    <button className={styles.btnhome}>Home</button>
+                    <Link href = "homePage">
+                        <button className={styles.btnhome}>Home</button>
+                    </Link>
                 </nav>
             </header>
 
             <div className={styles.container}>
                 <p className={styles.text}>Please select room type</p>
                 <div className={styles.btns}>
-                    <a href="roompage2.html"><button className={styles.btn}>Host a Game</button></a>
-                    <button className={styles.btn}>Join a Game</button>
+                    <Link href = "/hostPage">
+                        <button className={styles.btn}>Host a Game</button>
+                    </Link>
+                    <Link href = "/joinPage">
+                        <button className={styles.btn}>Join a Game</button>
+                    </Link>
                 </div>
             </div>
         </body>

@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
 
+.logo {
+    font-size: 3em;
+    user-select: none;
+}
+
 .header_widgets {
     display:inline-block;
     position: relative;
