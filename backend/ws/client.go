@@ -60,30 +60,28 @@ func (c *Client) Write() {
 // Read any coordinate updates from the frontend and update the game state.
 func (c *Client) Read(hub *Hub) {
     defer func() {
+        hub.Unregister <- c
         c.Socket.Close()
     }()
-    
-    _, coords, err := c.Socket.ReadMessage()
 
-    if err != nil {
-        if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
-            log.Printf("error: %v", err)
+    for {
+    
+        _, coords, err := c.Socket.ReadMessage()
+
+        if err != nil {
+            if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+                log.Printf("error: %v", err)
+            }
+            break
         }
+
+        // Parse coordinates from message
+        coordsStr := strings.Split(string(coords), ",")
+        x, _ := strconv.ParseFloat(coordsStr[0], 64)
+        y, _ := strconv.ParseFloat(coordsStr[1], 64)
+        c.Coords = &Coords{X: x, Y: y}
+
+        // Update game state
+        hub.Broadcast <- updateState(c, hub) 
     }
-
-    arr := strings.Split(string(coords), ",")
-
-    c.Coords.X, err = strconv.ParseFloat(arr[0], 64)
-    if err != nil {
-        log.Printf("error: %v", err)
-    }
-
-    c.Coords.Y, err = strconv.ParseFloat(arr[1], 64)
-    if err != nil {
-        log.Printf("error: %v", err)
-    }
-
-    state := handleCoords(c, hub)
-    
-    hub.Broadcast <- state
 }

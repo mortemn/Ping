@@ -3,6 +3,7 @@ package ws
 type Room struct {
     ID      string        `json:"id"`
     Clients map[string]*Client `json:"clients"`
+    State   chan *GameState `json:"state"`
 }
 
 type Hub struct {
@@ -24,7 +25,6 @@ func NewHub() *Hub {
 func (h *Hub) Run() {
     for {
         select {
-
         case client := <-h.Register:
             if _, ok := h.Rooms[client.RoomId]; ok {
                 r := h.Rooms[client.RoomId]

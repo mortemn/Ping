@@ -50,6 +50,7 @@ func (h *Handler) CreateRoom(c *gin.Context) {
     h.hub.Rooms[req.ID] = &Room{
         ID: req.ID,
         Clients: make(map[string]*Client),
+        State: make(chan *GameState),
     }
 
     c.JSON(http.StatusOK, req)
@@ -89,7 +90,7 @@ func (h *Handler) InitiateGame(c *gin.Context){
 
     h.hub.Broadcast <- state
 
-    // go gameTimer(h.hub, req.Timer, req.ID)
+    go gameTimer(h.hub, req.Timer, roomId)
     // mapBoundary(req.Map)
 
     c.JSON(http.StatusOK, req)
@@ -112,6 +113,11 @@ func (h *Handler) JoinRoom(c *gin.Context){
     roomId := c.Param("roomId")
     clientId := c.Query("clientId")
     username := c.Query("username")
+
+    if _, ok := h.hub.Rooms[roomId]; !ok {
+        c.JSON(http.StatusNotFound, gin.H{"error": "Room not found"})
+        return
+    }
 
     client := &Client{
         Socket: conn,

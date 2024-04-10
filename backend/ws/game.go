@@ -24,34 +24,41 @@ func gameTimer(h *Hub, gameDuration string, roomId string) {
     default:
         log.Printf("error: Choice Invalid")
     }
-    // Using case statements to assign value to timer (easier than using strconv).
 
-    for (timePassed < timer) {
-        // for-loop to keep track of time passed.
-        gametimer := time.NewTimer(1 * time.Minute)
-        <-gametimer.C
-        timePassed += 1
-        updateTimer(timePassed, roomId)
-        fmt.Print("Time passed: ", timePassed)
+    for timePassed < timer {
+        time.Sleep(time.Second * 5)
+        timePassed++
+        // Increment timePassed by 1 every minute.
+        gs := updateTimer(h, timer-timePassed, roomId)
+        h.Broadcast <- gs
     }
 
     gs := &GameState{
         Over: true,
         Started: true,
         RoomId: roomId,
-        Message: "Game is Over!",
+        Message: "Time's Up! Game Over!",
         Timer: "0",
     }
     
     h.Broadcast <- gs 
 }
 
-func updateTimer(timePassed int, roomId string) (gs *GameState) {
-    // function to update game timer.
-    // made separate function so that it return a value (because one function can't return multiple values).
-    timePassedStr := strconv.Itoa(timePassed)
-    gs.Timer = timePassedStr
-    gs.RoomId = roomId
+func updateTimer(h *Hub, timeRemaining int, roomId string) (gs *GameState) {
+    timeRemainingStr := strconv.Itoa(timeRemaining)
+
+    // Get the current hider count.
+    hiderCount := getPlayerCount(h.Rooms[roomId])
+
+    gs = &GameState{
+        Over: false,
+        Started: true,
+        RoomId: roomId,
+        Message: "Time Remaining: " + timeRemainingStr + " minutes",
+        Timer: timeRemainingStr,
+        HiderCount: hiderCount,
+    }
+
     return gs
 }
 
@@ -103,10 +110,10 @@ func mapBoundary(choice string){
 }
 
 
-func handleCoords(c *Client, hub *Hub) *GameState{
-    gs := <- c.State
-    mapCoords(c, hub)
-    playerCoords(c, gs, hub)
+func updateState(c *Client, hub *Hub) *GameState{
+    gs := <-hub.Rooms[c.RoomId].State
+    // mapCoords(c, hub)
+    // playerCoords(c, gs, hub)
 
     if gs.HiderCount <= 0 {
         gs.Over = true
@@ -216,4 +223,14 @@ func getPlayerCount(r *Room) int {
         }
     }
     return count
+}
+
+func replaceState(h *Hub, gs *GameState) {
+    select {
+    case h.Rooms[gs.RoomId].State <- gs:
+        fmt.Println("State updated")
+    default:
+        <-h.Rooms[gs.RoomId].State
+        h.Rooms[gs.RoomId].State <- gs
+    }
 }
