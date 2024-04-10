@@ -1,0 +1,154 @@
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
+.logo {
+    font-size: 3em;
+    user-select: none;
+}
+
+.red-letter{
+    color:red;
+}
+
+.navigation {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.navigation .btn {
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid black;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: black;
+    font-weight: 500;
+    margin-left: 20px;
+    /* margin-left: 720px; */
+    transition: .5s;
+}
+
+.navigation .btn:hover {
+    background: darkgray;
+    color: #162938;
+}
+
+.container {
+    height: 90vh;
+    width: 100vw;
+    margin-top: 10vh;
+    padding : 40px 60px;
+    font-size: 2em;
+    display: flex;
+}
+
+.left-panel {
+    flex: 1;
+    padding: 0px;
+    margin: 0px 15px;
+    /* text-align: center; */
+    /* align-items: center; */
+    display : flex;
+    flex-direction: column;
+}
+
+.left-top-panel {
+    flex:2;
+    background-color: rgba(225, 225, 225, 1);
+    margin-bottom: 20px;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;   
+}
+
+.user-avatar{
+    background-color:white;
+    border-radius:50%;
+    width: 220px;
+    height:220px;
+    margin: 30px;
+    /* align-items: center; */
+}
+
+.left-top-panel p{
+    margin-bottom: 30px;
+}
+.player-comment{
+    height:30px;
+    width: 250px;
+    border-radius: 15px;
+    background-color:white;
+    margin-bottom: 30px;
+}
+
+.left-bottom-panel {
+    flex:1;
+    background-color: rgba(225, 225, 225, 1);
+    border-radius: 20px;
+    text-align: center;
+    padding:20px;
+}
+.right-panel {
+    flex: 2;
+    display: flex; 
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    margin: 0px 15px;
+    border-radius: 20px;
+    background-color: rgba(225, 225, 225, 1);
+}
+
+.game-stats{
+    margin: 20px;
+    font-size: 1.2em;
+}
+
+.stats-panel{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    padding-bottom: 50px;
+    /* background-color: aquamarine; */
+}
+.stats-left{
+    flex: 3;
+    padding: 0px 30px;
+    height: 100%;
+    /* background-color: rgb(155, 79, 130); */
+}
+
+.stats-left p {
+    margin-bottom: 30px;
+}
+
+.rate-chart{
+    position: relative;
+}
+
+.doughnut {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+}
+
+.doughnut2 {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    transform: rotate(10deg);
+}
+
+.stats-right{
+    flex: 4;
+    min-height: 400px;
+    height: 90%;
+    padding: 0px 30px;
+}
