@@ -42,7 +42,7 @@ const HomePage = () => {
               3. When hiders are caught, they will be switched over to the<br/> seekers team and continue the game as seekers.<br/>
               4. The game ends when the time is up or all hiders have been caught.<br/>
               5. Hide longer to accumulate more scores;<br/> Catch more hiders to accumulate more scores.<br/>
-              6. Have fun! <br/>Remember: you can run but you can't hide...<br/>
+              6. Have fun! <br/>Remember: you can run but you can&apos;t hide...<br/>
             </div>
           </div>
           <div className={styles["right-panel"]}>
