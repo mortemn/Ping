@@ -49,7 +49,7 @@ export default function Home() {
                 <h2 className={styles.logo}>P<span style={{ color: 'red' }}>I</span>NG</h2>
                 <h2 className={styles.ttl}>A hide and seek game</h2>
                 <nav className={styles.navigation}>
-                    <Link href = "/homePage">
+                    <Link href = "./">
                         <button className={styles.btnlogin}>Home</button>
                     </Link>
                 </nav>
@@ -77,10 +77,12 @@ export default function Home() {
                                 <a href="#">Forgot Password?</a>
                             </div>
                         </div>
-                        <button type="submit" className={styles.btn} onClick={login}>Login</button>
+                        <Link href="./profilePage">
+                            <button type="submit" className={styles.btn} onClick={login}>Login</button>
+                        </Link>
                         <div className={styles.login_register} >
                             <p>Don&apos;t have an account?&nbsp;
-                                <a href="/registrationPage" className={styles.register_link}>Register</a>
+                                <a href="/RegistrationPage" className={styles.register_link}>Register</a>
                             </p>
                         </div>
                     </form>

@@ -10,6 +10,7 @@ import {
   LineElement,
 } from "chart.js";
 import { useState } from "react";
+import Link from "next/link";
 
 ChartJS.register(
   ArcElement,
@@ -133,8 +134,12 @@ const ProfilePage = () => {
           P<span className={styles["red-letter"]}>I</span>NG
         </h2>
         <nav className={styles["navigation"]}>
-          <button className={styles["btn"]}>LOG OUT</button>
-          <button className={styles["btn"]}>PLAY</button>
+          <Link href= "./loginPage">
+            <button className={styles["btn"]}>LOG OUT</button>
+          </Link>
+          <Link href= "./RoomPage">
+            <button className={styles["btn"]}>PLAY</button>
+          </Link>
         </nav>
       </header>
       <div className={styles.container}>

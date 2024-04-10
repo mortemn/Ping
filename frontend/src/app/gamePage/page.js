@@ -15,7 +15,6 @@ export default function Home() {
                         <a>Player3</a>
                     </div>
                 </div>
-                <h2 className={styles.logo}>P<span style={{color: 'red'}}>I</span>NG</h2>
                 <div className={styles.countdown}>14:39</div>
             </header>
             <button className={styles.button}>!</button>

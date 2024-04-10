@@ -83,7 +83,7 @@ export default function Home() {
                 <h2 className={styles.logo}>P<span style={{ color: 'red' }}>I</span>NG</h2>
                 <h2 className={styles.ttl}>A hide and seek game</h2>
                 <nav className={styles.navigation}>
-                    <Link href = "/homePage">
+                    <Link href = "./">
                         <button className={styles.btnlogin}>Home</button>
                     </Link>
                 </nav>
@@ -111,8 +111,9 @@ export default function Home() {
                             <label><input type="checkbox" />I agree to the &nbsp;<a href="/tncPage" className={styles.tnc}>Terms and Conditions.</a></label>
 
                         </div>
-                        <button type="submit" className={styles.btn} onClick={signUp} >Register</button>
-                        <button type="submit" className={styles.btn}>Register</button>
+                        <Link href = "profilePage">
+                            <button type="submit" className={styles.btn} onClick={signUp} >Register</button>
+                        </Link>
                         <div className={styles.login_register}>
                             <p>Already have an account?&nbsp;
                                 <a href="/loginPage" className={styles.login_link}>Login</a>

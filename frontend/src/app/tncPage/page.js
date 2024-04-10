@@ -36,7 +36,7 @@ export default function Home() {
                         injuries, or damages that may occur during the course of the game.<br/>
                         6. Have fun!<br/>
                     </div>
-                    <Link href = "./registrationPage">
+                    <Link href = "./RegistrationPage">
                         <button className={styles.btn}>Back</button>
                     </Link>
             </div>

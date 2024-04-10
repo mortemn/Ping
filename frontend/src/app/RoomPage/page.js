@@ -8,7 +8,7 @@ export default function Home() {
             <header>
                 <h2 className={styles.logo}>P<span style={{color: 'red'}}>I</span>NG</h2>
                 <nav className={styles.navigation}>
-                    <Link href = "homePage">
+                    <Link href = "./">
                         <button className={styles.btnhome}>Home</button>
                     </Link>
                 </nav>
@@ -17,10 +17,10 @@ export default function Home() {
             <div className={styles.container}>
                 <p className={styles.text}>Please select room type</p>
                 <div className={styles.btns}>
-                    <Link href = "/hostPage">
+                    <Link href = "/HostPage">
                         <button className={styles.btn}>Host a Game</button>
                     </Link>
-                    <Link href = "/joinPage">
+                    <Link href = "/JoinPage">
                         <button className={styles.btn}>Join a Game</button>
                     </Link>
                 </div>

@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
 
-.logo {
-    font-size: 3em;
-    user-select: none;
-}
-
 .header_widgets {
     display:inline-block;
     position: relative;
@@ -93,6 +88,12 @@
 }
 
 @media screen and (max-width: 768px) {
+    .header {
+        display: flex;
+        flex-direction: column;
+        width: max-content;
+    }
+
     .header_widgets {
         min-width: 100px;
         position:absolute;
@@ -112,5 +113,6 @@
         right:15px;
         font-size: 35px;
     }
+
 }
 

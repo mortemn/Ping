@@ -33,7 +33,7 @@ export default function Home() {
             <header>
                 <h2 className={styles.logo}>P<span style={{ color: 'red' }}>I</span>NG</h2>
                 <nav className={styles.navigation}>
-                    <Link href ="homePage">
+                    <Link href ="./">
                         <button className={styles.btnhome}>Home</button>
                     </Link>
                 </nav>
