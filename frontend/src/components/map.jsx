@@ -75,6 +75,8 @@ export function Map() {
             };
 
             const trackLocation = async () => {
+                const socket = new WebSocket('ws://localhost:8080/ws/joinRoom/1?clientId=1&username=user1');
+
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
                         (position) => {
@@ -85,6 +87,7 @@ export function Map() {
                         console.log(pos);
                         map.setCenter(pos);
                         marker.setPosition(pos);
+                        socket.send(JSON.stringify(pos.lat, pos.lng));
                     },
                     function (error) { },
                     {enableHighAccuracy: true});
@@ -96,6 +99,7 @@ export function Map() {
                     };
                     map.setCenter(defaultPosition);
                     marker.setPosition(defaultPosition);
+                    socket.send(JSON.stringify(pos.lat, pos.lng));
                 }
                 let delayres = await delay(1000);
                 trackLocation();
