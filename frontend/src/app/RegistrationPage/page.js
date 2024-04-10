@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
+import Link from "next/link";
 import { v4 as uuidv4 } from 'uuid';
 
 export default function Home() {
@@ -82,10 +83,11 @@ export default function Home() {
                 <h2 className={styles.logo}>P<span style={{ color: 'red' }}>I</span>NG</h2>
                 <h2 className={styles.ttl}>A hide and seek game</h2>
                 <nav className={styles.navigation}>
-                    <button className={styles.btnlogin}>Login</button>
+                    <Link href = "/homePage">
+                        <button className={styles.btnlogin}>Home</button>
+                    </Link>
                 </nav>
             </header>
-
             <div className={styles.wrapper}>
                 <div className={styles.form_box}>
                     <h2>Registration</h2>
