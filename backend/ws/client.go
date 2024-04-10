@@ -4,6 +4,7 @@ import (
 	"log"
 	"strconv"
 	"strings"
+    "fmt"
 
 	"github.com/gorilla/websocket"
 )
@@ -74,6 +75,8 @@ func (c *Client) Read(hub *Hub) {
             }
             break
         }
+
+        fmt.Println("Received coordinates: ", string(coords))
 
         // Parse coordinates from message
         coordsStr := strings.Split(string(coords), ",")
