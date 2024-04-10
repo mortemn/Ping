@@ -80,7 +80,7 @@ export default function Home() {
                         <button type="submit" className={styles.btn} onClick={login}>Login</button>
                         <div className={styles.login_register} >
                             <p>Don&apos;t have an account?&nbsp;
-                                <a href="/RegistrationPage" className={styles.register_link}>Register</a>
+                                <a href="/registrationPage" className={styles.register_link}>Register</a>
                             </p>
                         </div>
                     </form>
