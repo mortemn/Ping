@@ -77,31 +77,31 @@ func mapBoundary(choice string){
     switch (choice){
     case "0":
         // Coordinates of the first map boundary.
-        topLeftX = 90
-        topLeftY = 9000
+        topLeftX = -2.234781 
+        topLeftY = 53.467592        
+
+        bottomLeftX = -2.232430 
+        bottomLeftY = 53.465037 
         
-        topRightX = 9000
-        topRightY = 9000
+        topRightX = -2.228608 
+        topRightY = 53.466272 
         
-        bottomLeftX = 90
-        bottomLeftY = 90
-        
-        bottomRightX = 900
-        bottomRightY = 90
+        bottomRightX = -2.231434 
+        bottomRightY = 53.468730 
     
     case "1":
         // Coordinates of the second map boundary.
-        topLeftX = 0
-        topLeftY = 1000
+        topLeftX = -2.231601 
+        topLeftY =  53.459891        
+
+        topRightX =  -2.228131
+        topRightY = 53.459891 
         
-        topRightX = 1000
-        topRightY = 1000
+        bottomLeftX = -2.231601 
+        bottomLeftY = 53.457848
         
-        bottomLeftX = 0
-        bottomLeftY = 0
-        
-        bottomRightX = 100
-        bottomRightY = 0
+        bottomRightX = -2.228131
+        bottomRightY = 53.457848
 
     default:
         // Check validity of the map choice.
@@ -144,7 +144,7 @@ func playerCoords(c *Client, gs *GameState, hub *Hub){
     x := c.Coords.X
     y := c.Coords.Y
 
-    var boundary float64 = 0.0001
+    var boundary float64 = 0.0005
     // Determine boundary(radius) of each player.
 
     for _, oc := range hub.Rooms[c.RoomId].Clients {
