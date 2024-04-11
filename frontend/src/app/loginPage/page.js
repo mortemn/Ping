@@ -24,10 +24,11 @@ export default function Home() {
       await fetch("http://localhost:3000", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credientials: 'include',
-        // get cookie when logged in
         body: JSON.stringify(data),
       });
+      localStorage.setItem('token', token);
+      const { token } = data.json();
+      // get cookie when logged in
 
       await router.push("/profilePage");
     } catch (error) {

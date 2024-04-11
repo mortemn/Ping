@@ -17,18 +17,18 @@ export default function Home() {
     e.preventDefault();
     var data = {
       Username: username,
-      Email: email,
       Password: password,
       PlayerID: playerID,
+      Email: email,
     };
 
     try {
-      await fetch("http://localhost:3000", {
+      await fetch("http://localhost:8080/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
-
+      console.log('Registration successful:', data);
       await router.push("/loginPage");
     } catch (error) {
       console.error("Registration error: ", error.message);
@@ -54,15 +54,15 @@ export default function Home() {
           <h2>Registration</h2>
           <form onSubmit={submit}>
             <div className={styles.input_box}>
-              <span className={styles.icon}></span>
+              <span className={styles.icon}><ion-icon name="person"></ion-icon></span>
               <input type="username" placeholder="Username" required onChange={(e) => setUsername(e.target.value)}/>
             </div>
             <div className={styles.input_box}>
-              <span className={styles.icon}></span>
+              <span className={styles.icon}><ion-icon name="mail"></ion-icon></span> 
               <input type="email" placeholder="Email" required onChange={(e) => setEmail(e.target.value)}/>
             </div>
             <div className={styles.input_box}>
-              <span className={styles.icon}></span>
+              <span className={styles.icon}><ion-icon name="lock-closed"></ion-icon></span>
               <input type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)}/>
             </div>
             <div className={styles.remember_forgot}>
