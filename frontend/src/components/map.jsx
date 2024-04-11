@@ -1,16 +1,19 @@
 "use client"
 
-import React, { useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Loader } from "@googlemaps/js-api-loader";
 import WindowDimensions from '../hooks/WindowDimensions';
 
 export function Map() {
   
-    const mapRef = React.useRef(null);
-    
+    const mapRef = useRef(null);
+    const [socket, setSocket] = useState(null);
     const { wid, hei } = WindowDimensions();
 
-    useEffect(() => {
+    const ws = new WebSocket('ws://localhost:8080/ws/joinRoom/1?clientId=5&username=user5');
+    setSocket(ws);
+    
+    useEffect(() => {        
         const initMap = async () => {
             const loader = new Loader({
                 apiKey: "AIzaSyAY8mc3IlmHOWs-W2roWPeItGcYfMIe1cg",
@@ -56,7 +59,7 @@ export function Map() {
                         };
                     console.log(pos);
                     map.setCenter(pos);
-                    marker.setPosition(pos);
+                    marker.setPosition(pos);                   
                     },
                     function (error) { },
                     {enableHighAccuracy: true});
@@ -72,10 +75,8 @@ export function Map() {
 
             const delay = (delayInms) => {
                 return new Promise(resolve => setTimeout(resolve, delayInms));
-            };
-
-            const trackLocation = async () => {
-                const socket = new WebSocket('ws://localhost:8080/ws/joinRoom/1?clientId=1&username=user1');
+            };            
+            const trackLocation = async () => {                
 
                 if (navigator.geolocation) {
                     navigator.geolocation.getCurrentPosition(
@@ -86,8 +87,7 @@ export function Map() {
                             };
                         console.log(pos);
                         map.setCenter(pos);
-                        marker.setPosition(pos);
-                        socket.send(JSON.stringify(pos.lat, pos.lng));
+                        marker.setPosition(pos);                    
                     },
                     function (error) { },
                     {enableHighAccuracy: true});
@@ -98,8 +98,7 @@ export function Map() {
                         lng: 0
                     };
                     map.setCenter(defaultPosition);
-                    marker.setPosition(defaultPosition);
-                    socket.send(JSON.stringify(pos.lat, pos.lng));
+                    marker.setPosition(defaultPosition);                    
                 }
                 let delayres = await delay(1000);
                 trackLocation();

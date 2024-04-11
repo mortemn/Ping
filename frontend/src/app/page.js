@@ -46,7 +46,7 @@ const HomePage = () => {
             </div>
           </div>
           <div className={styles["right-panel"]}>
-            <Link href="/roomPage">
+            <Link href="/RoomPage">
               <button className={styles["start-game-btn"]}>START GAME</button>
             </Link>
           </div>
