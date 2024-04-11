@@ -111,9 +111,10 @@ func mapBoundary(choice string){
 
 
 func updateState(c *Client, hub *Hub) *GameState{
-    gs := <-hub.Rooms[c.RoomId].State
-    // mapCoords(c, hub)
-    // playerCoords(c, gs, hub)
+    gs := hub.Rooms[c.RoomId].State
+    fmt.Println("Updating state", gs)
+    mapCoords(c, hub)
+    playerCoords(c, gs, hub)
 
     if gs.HiderCount <= 0 {
         gs.Over = true
@@ -186,15 +187,13 @@ func playerCoords(c *Client, gs *GameState, hub *Hub){
 
 
 func playerScore(c *Client){
-     var scoreint int = c.Score
-
      if (c.Seeker == false) {
      // score count for hiders
-         c.Score = timePassed * 400
+        c.Score = timePassed * 400
          // 400 for every minute hidden
      } else { 
      // score count for seeker
-         scoreint += 1000
+        c.Score += 1000
          // 1000 for every seeker caught
      }
 }
@@ -223,14 +222,4 @@ func getPlayerCount(r *Room) int {
         }
     }
     return count
-}
-
-func replaceState(h *Hub, gs *GameState) {
-    select {
-    case h.Rooms[gs.RoomId].State <- gs:
-        fmt.Println("State updated")
-    default:
-        <-h.Rooms[gs.RoomId].State
-        h.Rooms[gs.RoomId].State <- gs
-    }
 }

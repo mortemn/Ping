@@ -1,9 +1,13 @@
 package ws
 
+import (
+    "fmt"
+)
+
 type Room struct {
     ID      string        `json:"id"`
     Clients map[string]*Client `json:"clients"`
-    State   chan *GameState `json:"state"`
+    State   *GameState 
 }
 
 type Hub struct {
@@ -49,9 +53,12 @@ func (h *Hub) Run() {
 
         case state := <-h.Broadcast:
             if _, ok := h.Rooms[state.RoomId]; ok {
+                fmt.Println("Broadcasting to room: ", state.RoomId)
                 for _, client := range h.Rooms[state.RoomId].Clients {
                     client.State <- state
                 }
+                h.Rooms[state.RoomId].State = state
+                fmt.Println("Broadcasted to room: ", state.RoomId)
             }
         }
     }

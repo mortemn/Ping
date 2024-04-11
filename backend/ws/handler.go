@@ -50,7 +50,7 @@ func (h *Handler) CreateRoom(c *gin.Context) {
     h.hub.Rooms[req.ID] = &Room{
         ID: req.ID,
         Clients: make(map[string]*Client),
-        State: make(chan *GameState),
+        State: &GameState{},
     }
 
     c.JSON(http.StatusOK, req)

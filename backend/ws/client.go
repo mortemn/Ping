@@ -86,5 +86,7 @@ func (c *Client) Read(hub *Hub) {
 
         // Update game state
         hub.Broadcast <- updateState(c, hub) 
+
+        fmt.Println("Updated coordinates: ", c.Coords)
     }
 }
