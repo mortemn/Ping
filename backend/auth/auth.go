@@ -1,15 +1,16 @@
 package auth
 
 import (
-    "database/sql"
-    "encoding/json"
-    "fmt"
-    "net/http"
-    "time"
+	"context"
+	"database/sql"
+	"encoding/json"
+	"fmt"
+	"log"
+	"net/http"
+	"time"
+
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
-    "log"
-    "context"
-    "github.com/gin-gonic/gin"
 )
 
 var Db *sql.DB
