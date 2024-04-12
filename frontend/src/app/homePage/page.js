@@ -10,7 +10,7 @@ const HomePage = () => {
           P<span className={styles["red-letter"]}>I</span>NG
         </h2>
         <nav className={styles["navigation"]}>
-          <Link href="/loginPage">
+          <Link href="/LoginPage">
             <button className={styles["btn"]}>LOG IN</button>
           </Link>
           <Link href = "/profilePage">

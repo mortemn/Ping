@@ -79,7 +79,7 @@ export default function Home() {
             <div className={styles.login_register}>
               <p>
                 Already have an account?&nbsp;
-                <a href="/loginPage" className={styles.login_link}>
+                <a href="/LoginPage" className={styles.login_link}>
                   Login
                 </a>
               </p>
