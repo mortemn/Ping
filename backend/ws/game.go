@@ -118,6 +118,7 @@ func updateState(c *Client, hub *Hub) *GameState{
 
     if gs.HiderCount <= 0 {
         gs.Over = true
+        gs.Message = "All Hiders Caught! Game Over!"
     }
 
     return gs
@@ -173,6 +174,7 @@ func playerCoords(c *Client, gs *GameState, hub *Hub){
                         oc.Score = oc.Score - 200
                         // Decrement hider's score as a penalty for being caught
                         gs.HiderCount = gs.HiderCount - 1
+                        gs.Message = "A hider has been caught!"
                         // Update Hider Count value
                         oc.Seeker = true
                         // Change hider's status to seeker
