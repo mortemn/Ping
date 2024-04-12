@@ -20,7 +20,7 @@ func main() {
 	
 	// CORS middleware
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3002"}
+	config.AllowOrigins = []string{"http://localhost:3001"}
 	router.Use(cors.New(config))
 
 	hub := ws.NewHub()

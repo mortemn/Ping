@@ -12,12 +12,11 @@ export default function Home() {
 
     async function clickHandler() {
         try {
-            const res = await fetch(`http://localhost:8080/createRoom`, {
+            const res = await fetch(`http://localhost:8080/ws/createRoom`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                credentials: 'include',
                 body: JSON.stringify({
                     id: "1",
                 })
