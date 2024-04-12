@@ -16,10 +16,10 @@ export default function Home() {
   const submit = async (e) => {
     e.preventDefault();
     var data = {
-      Username: username,
-      Password: password,
-      PlayerID: playerID,
-      Email: email,
+      "Username": username,
+      "Password": password,
+      "PlayerID": playerID,
+      "Email": email,
     };
 
     try {
@@ -55,15 +55,15 @@ export default function Home() {
           <form onSubmit={submit}>
             <div className={styles.input_box}>
               <span className={styles.icon}><ion-icon name="person"></ion-icon></span>
-              <input type="username" placeholder="Username" required onChange={(e) => setUsername(e.target.value)}/>
+              <input type="username" placeholder="Username" required onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div className={styles.input_box}>
-              <span className={styles.icon}><ion-icon name="mail"></ion-icon></span> 
-              <input type="email" placeholder="Email" required onChange={(e) => setEmail(e.target.value)}/>
+              <span className={styles.icon}><ion-icon name="mail"></ion-icon></span>
+              <input type="email" placeholder="Email" required onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className={styles.input_box}>
               <span className={styles.icon}><ion-icon name="lock-closed"></ion-icon></span>
-              <input type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)}/>
+              <input type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
             </div>
             <div className={styles.remember_forgot}>
               <label>

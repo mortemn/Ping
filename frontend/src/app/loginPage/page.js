@@ -21,13 +21,16 @@ export default function Home() {
     };
 
     try {
-      await fetch("http://localhost:3002", {
+      const response = await fetch("http://localhost:8080/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+
+
+      console.log(response);
+      const { token } = response.json();
       localStorage.setItem('token', token);
-      const { token } = data.json();
       // get cookie when logged in
 
       await router.push("/profilePage");
@@ -58,13 +61,13 @@ export default function Home() {
               <span className={styles.icon}>
                 <ion-icon name="person"></ion-icon>
               </span>
-              <input type="username" placeholder="Username" required onChange={(e) => setUsername(e.target.value)}/>
+              <input type="username" placeholder="Username" required onChange={(e) => setUsername(e.target.value)} />
             </div>
             <div className={styles.input_box}>
               <span className={styles.icon}>
                 <ion-icon name="lock-closed"></ion-icon>
               </span>
-              <input type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)}/>
+              <input type="password" placeholder="Password" required onChange={(e) => setPassword(e.target.value)} />
             </div>
             <div className={styles.remember_forgot}>
               <div>
