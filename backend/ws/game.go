@@ -26,7 +26,7 @@ func gameTimer(h *Hub, gameDuration string, roomId string) {
     }
 
     for timePassed < timer {
-        time.Sleep(time.Second * 5)
+        time.Sleep(time.Minute * 1)
         timePassed++
         // Increment timePassed by 1 every minute.
         gs := updateTimer(h, timer-timePassed, roomId)
