@@ -19,14 +19,17 @@ export default function Home() {
                 },
                 credentials: 'include',
                 body: JSON.stringify({
-                    id: "1"
+                    id: "1",
                 })
             });
-            console.log(res);
-        } catch (error) {
-            console.log(error);
+            if (res.ok) {
+                console.log("Room created")
+            }
+        } catch(err) {
+            console.log(err)
         }
-    }
+
+    } 
 
     return (
         <body>
@@ -72,9 +75,7 @@ export default function Home() {
                             <option value="optionC" >Whitworth Park</option>
                         </select>
                     </div>
-                    <Link href = "waitingPage">
                         <button className={styles.btn} onClick={clickHandler} >Start Game</button>
-                    </Link>
                 </div>
             </div>
 
