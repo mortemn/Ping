@@ -4,18 +4,24 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/gin-contrib/cors"
 	_ "github.com/microsoft/go-mssqldb"
 
+	"github.com/gin-gonic/gin"
 
-    "github.com/gin-gonic/gin"
+	"main/auth"
+	"main/ws"
 
 	_ "github.com/go-sql-driver/mysql"
-	"main/ws"
-    "main/auth"
 )
 
 func main() {
 	router := gin.Default()
+	
+	// CORS middleware
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:3002"}
+	router.Use(cors.New(config))
 
 	hub := ws.NewHub()
 	wsHandler := ws.NewHandler(hub)
