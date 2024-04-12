@@ -26,6 +26,7 @@ func main() {
 	hub := ws.NewHub()
 	wsHandler := ws.NewHandler(hub)
 	go hub.Run()
+	auth.ConnectToDatabase()
 
 	// Websocket endpoints
 	router.POST("/ws/createRoom", wsHandler.CreateRoom)
@@ -43,7 +44,6 @@ func main() {
 	router.POST("/logout", auth.Logout)
 
 	router.Run()
-	auth.ConnectToDatabase()
 
 	log.Fatal(http.ListenAndServe(":8000", nil))
 
