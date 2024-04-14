@@ -27,13 +27,16 @@ export default function Home() {
         body: JSON.stringify(data),
       });
 
+      if (!response.ok) {
+        throw new Error("Invalid status code");
+      }
 
       console.log(response);
       const { token } = response.json();
       localStorage.setItem('token', token);
       // get cookie when logged in
 
-      await router.push("/profilePage");
+      router.push("/profilePage");
     } catch (error) {
       console.error("Registration error: ", error.message);
     }

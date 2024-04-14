@@ -16,10 +16,10 @@ export default function Home() {
   const submit = async (e) => {
     e.preventDefault();
     var data = {
-      "Username": username,
-      "Password": password,
-      "PlayerID": playerID,
-      "Email": email,
+      Username: username,
+      Password: password,
+      PlayerID: playerID,
+      Email: email,
     };
 
     try {
@@ -29,7 +29,7 @@ export default function Home() {
         body: JSON.stringify(data),
       });
       console.log('Registration successful:', data);
-      await router.push("/loginPage");
+      router.push("/loginPage");
     } catch (error) {
       console.error("Registration error: ", error.message);
     }
