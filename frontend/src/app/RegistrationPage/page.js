@@ -23,11 +23,16 @@ export default function Home() {
     };
 
     try {
-      await fetch("http://localhost:8080/signup", {
+      await fetch("/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
+
+      if (!response.ok) {
+        throw new Error("Invalid status code");
+      }
+
       console.log('Registration successful:', data);
       router.push("/loginPage");
     } catch (error) {
