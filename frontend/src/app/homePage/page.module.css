@@ -1,5 +1,4 @@
 @import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap');
-
 .logo {
     font-size: 3em;
     user-select: none;
@@ -25,8 +24,8 @@
     font-size: 1.1em;
     color: black;
     font-weight: 500;
+    margin-left: 20px;
     transition: .5s;
-    margin-right: 15px;
 }
 
 .navigation .btn:hover {
@@ -34,65 +33,64 @@
     color: #162938;
 }
 
-.container {
-    font-size: 2em;
-    width: 100%;
-}
 
 .top-container{
     display: flex;
-    flex-direction: row;
-    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    height: 90vh;
 }
 
+
 .left-panel {
-    width: 75%;
+    padding: 5.65vw 0px 0px 5px;
+    padding-left: 6.43vw;
+    padding-right: 6.43vw;
+    flex: 49;
     background-color: rgba(225, 225, 225, 1);
     text-align: center;
-    height: max-content;
 }
 
 .left-panel p {
     font-weight: bold;
     line-height: 1.6;
-    padding: 35px 35px;
+    padding-left: 35px;
+    padding-right: 35px;
     letter-spacing: 5px;
+    font-size: 2.5vw;
     text-transform: uppercase;
 }
 
 .how-to-pair {
-    margin-bottom: 40px;
+    margin-left: 40px;
     display: flex;
-    justify-content: center;
+    justify-content: left;
+    position: relative;
 }
 
 .how-to-pair ion-icon{
     color: red;
-    font-size: 2.0em;
+    font-size: 5vw;
+    position: absolute; 
     bottom: 0;
-}
 
+}
 .how-to-play {
     font-family: 'Pixelify Sans', sans-serif;
     font-weight: bold;
+    font-size: 2.5vw;
+    padding: 2.5vw 0px 0px 5vw;
     text-transform: uppercase;
     letter-spacing: 4px;
-    display:flex;
-    align-items: center;
-}
-
-.instructions {
-    line-height: 50px;
-    margin: 25px 0px 100px 0px;
-    padding: 0px 50px;
 }
 
 .right-panel {
+    flex: 37;
     display: flex;
-    width: 25%;
     justify-content: center;
     align-items: center;
     text-align: center;
+    /* padding-top: 22.150vw; */
 }
 
 .start-game-btn {
@@ -100,7 +98,7 @@
     color: white;
     border: none;
     padding: 38px 10px 42px 20px;
-    /* margin-left: 32px; */
+    margin-left: 32px;
     border-radius: 100px;
     cursor: pointer;
     font-size: 25px;
@@ -118,11 +116,13 @@
     flex-direction: column;
     text-align: center;
     padding: 0px;
+    margin: 0px;
+    height: 80vh;
     background-color: #F1F1F1F1;
 }
 
 .leaderboards-title{
-    height:100px;
+    height:15vh;
     font-size: 1.5em;
     font-weight: bold;
     text-transform: uppercase;
@@ -135,79 +135,36 @@
     flex-direction: row;
     justify-content: space-between; /* Center horizontally */
     align-items: center; /* Center vertically */
-    padding: 0px 10vw;
-    margin-bottom: 50px;
+    padding: 0px 5vw;
+    margin: 0px;
 }
 
-.leaderboards-body div {
+.leaderboards-body div{
     background-color: #e1e1e1;
-    height: 500px;
+    height: 60vh;
     width: 27vw;
     text-transform: uppercase;
     letter-spacing: 3px;
     padding-top: 25px;
-    margin: 15px 5px;
     border-radius: 30px;
 }
 
-
-@media screen and (max-width: 768px) {
-    .logo {
-        position: absolute; 
-        left: 15px;
-    } 
-
-    .navigation {
-        position: absolute;
-        top: 15px;
-        right: 20px;
-    }
-
-    .top-container {
-        flex-direction: column;
-    }
-
-    .left-panel {
-        width: 100%;
-    }
-
-    .right-panel {
-        margin: 50px 0px;
-        width: 100%;
-    }
+footer .btn{
+width: 130px;
+height: 50px;
+background: transparent;
+border: 2px solid rgb(210, 10, 10);
+outline: none;
+border-radius: 6px;
+cursor: pointer;
+font-size: 1.1em;
+color: rgb(210, 10, 10);
+font-weight: 500;
+margin-left: 20px;
+transition: .5s;
 }
 
-@media screen and (max-width: 640px) {
-    .header{
-        height: 90px;
-    }
-    .navigation {
-        flex-direction: column;
-    }
-
-    .navigation .btn {
-        height: 30px;
-        margin-top: -10px;
-        margin-bottom: 15px;
-    }
-    
-    .bottom-container {
-        position: relative;
-    }
-    
-    .leaderboards-title {
-        width: 100%;
-        font-size: 0.9em;
-    }
-
-    .leaderboards-body {
-        display: flex;
-        flex-direction: column;
-        font-size: 0.6em;
-    }
-
-    .leaderboards-body div {
-        height: 250px;
-        width: 100%;
-    }
+footer .btn:hover {
+background: darkgray;
+color: rgb(190, 0, 0);
 }
